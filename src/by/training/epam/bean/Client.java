@@ -1,5 +1,7 @@
 package by.training.epam.bean;
 
+import by.training.epam.data.ClientRole;
+
 public class Client {
 
     private String login;
@@ -15,11 +17,14 @@ public class Client {
     public Client(String str) {
         this();
         String[] array = str.split(" ");
-        try {
+        if (array.length >= 1) {
             login = array[0];
+        }
+        if (array.length >= 2) {
             password = array[1];
+        }
+        if (array.length == 3) {
             clientRole = ClientRole.valueOf(array[2].toUpperCase());
-        } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ignored) {
         }
     }
 
@@ -39,10 +44,7 @@ public class Client {
     }
 
     public void setLogin(String login) {
-        if (login == null) {
-            login = "";
-        }
-        this.login = login;
+        this.login = login == null ? "" : login;
     }
 
     public String getPassword() {
@@ -50,10 +52,7 @@ public class Client {
     }
 
     public void setPassword(String password) {
-        if (password == null) {
-            password = "";
-        }
-        this.password = password;
+        this.password = password == null ? "" : password;
     }
 
     public ClientRole getClientRole() {

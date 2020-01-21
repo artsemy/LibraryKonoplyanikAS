@@ -4,7 +4,6 @@ import by.training.epam.bean.Book;
 import by.training.epam.dao.LibDAO;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Library implements LibDAO {
 
@@ -104,12 +103,12 @@ public class Library implements LibDAO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Library library = (Library) o;
-        return Objects.equals(bookList, library.bookList); //bad
+        return bookList.equals(library.bookList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookList); //bad
+        return bookList.hashCode();
     }
 
 }

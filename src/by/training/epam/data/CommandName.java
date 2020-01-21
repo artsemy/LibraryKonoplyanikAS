@@ -1,4 +1,4 @@
-package by.training.epam.controller.command;
+package by.training.epam.data;
 
 public enum CommandName {
     SIGN_IN,

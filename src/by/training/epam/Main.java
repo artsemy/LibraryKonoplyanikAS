@@ -1,5 +1,6 @@
 package by.training.epam;
 
+import by.training.epam.bean.Book;
 import by.training.epam.controller.Controller;
 
 import java.util.Scanner;

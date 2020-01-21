@@ -2,7 +2,7 @@ package by.training.epam.controller.command.impl;
 
 import by.training.epam.bean.Client;
 import by.training.epam.controller.command.Command;
-import by.training.epam.service.Service;
+import by.training.epam.service.ClientService;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Registration implements Command {
         Client client = new Client(request);
         String res = null;
         try {
-            res =  Service.registration(client);
+            res = ClientService.registration(client);
         } catch (IOException e) {
             e.printStackTrace();
         }

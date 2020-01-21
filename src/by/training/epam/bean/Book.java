@@ -1,5 +1,7 @@
 package by.training.epam.bean;
 
+import by.training.epam.data.Constant;
+
 public class Book {
 
     private String title;
@@ -12,11 +14,11 @@ public class Book {
 
     public Book(String str) {
         this();
-        String[] array = str.split(" by ");
-        try {
-            title = array[0].trim();
-            author = array[1].trim();
-        } catch (IndexOutOfBoundsException | NullPointerException ignored) {
+        String divider = Constant.dividerBookLine;
+        String[] array = str.split(divider);
+        if (array.length != 1) {
+            title = array[0];
+            author = array[1];
         }
     }
 
@@ -30,10 +32,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        if (title == null) {
-            title = "";
-        }
-        this.title = title;
+        this.title = title == null ? "" : title;
     }
 
     public String getAuthor() {
@@ -41,10 +40,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        if (author == null) {
-            author = "";
-        }
-        this.author = author;
+        this.author = author == null ? "" : title;
     }
 
     @Override

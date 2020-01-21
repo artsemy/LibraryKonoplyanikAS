@@ -2,7 +2,7 @@ package by.training.epam.controller.command.impl;
 
 import by.training.epam.bean.Book;
 import by.training.epam.controller.command.Command;
-import by.training.epam.service.Service;
+import by.training.epam.service.BookService;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class DeleteBook implements Command {
         Book book = new Book(request);
         String res = null;
         try {
-            res = Service.deleteBook(book);
+            res = BookService.deleteBook(book);
         } catch (IOException e) {
             e.printStackTrace();
         }
