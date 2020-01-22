@@ -19,7 +19,7 @@ public class Controller {
         private String actualRequest;
 
         RequestSplit(String str) {
-            String divider = Constant.dividerLine;
+            String divider = Constant.DIVIDER_LINE;
             String[] array = str.split(divider);
             commandName = array[0];
             actualRequest = str.replace(commandName, "").trim();

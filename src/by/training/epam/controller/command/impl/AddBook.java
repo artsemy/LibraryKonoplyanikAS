@@ -13,7 +13,8 @@ public class AddBook implements Command {
         Book book = new Book(request);
         String response = null;
         try {
-            response = BookService.addBook(book);
+            BookService bookService = new BookService();
+            response = bookService.addBook(book);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package by.training.epam.dao;
+package by.training.epam.util;
 
 import by.training.epam.bean.Book;
 import by.training.epam.bean.Client;

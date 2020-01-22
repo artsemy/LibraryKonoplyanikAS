@@ -7,28 +7,32 @@ import by.training.epam.service.BookService;
 
 import java.io.IOException;
 
+import static by.training.epam.data.Constant.EMPTY_STRING;
+
 public class ChangeBook implements Command {
 
     @Override
     public String execute(String request) {
         int id = Integer.parseInt(getId(request));
         Book book = getBook(request);
+        String response = null;
         try {
-            BookService.changeBook(book, id);
+            BookService bookService = new BookService();
+            response = bookService.changeBook(book, id);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return response;
     }
 
     private String getId(String str) {
-        String[] array = str.split(Constant.dividerLine);
+        String[] array = str.split(Constant.DIVIDER_LINE);
         return array[0];
     }
 
     private Book getBook(String str) {
         String id = getId(str);
-        str = str.replace(id, "");
+        str = str.replace(id, EMPTY_STRING);
         return new Book(str);
     }
 

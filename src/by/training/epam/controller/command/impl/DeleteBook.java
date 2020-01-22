@@ -13,7 +13,8 @@ public class DeleteBook implements Command {
         Book book = new Book(request);
         String res = null;
         try {
-            res = BookService.deleteBook(book);
+            BookService bookService = new BookService();
+            res = bookService.deleteBook(book);
         } catch (IOException e) {
             e.printStackTrace();
         }

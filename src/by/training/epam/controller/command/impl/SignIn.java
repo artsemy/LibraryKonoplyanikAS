@@ -13,7 +13,8 @@ public class SignIn implements Command {
         Client client = new Client(request);
         String res = null;
         try {
-            res =  ClientService.signIn(client);
+            ClientService clientService = new ClientService();
+            res =  clientService.signIn(client);
         } catch (IOException e) {
             e.printStackTrace();
         }

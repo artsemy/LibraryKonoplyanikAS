@@ -1,6 +1,7 @@
 package by.training.epam.bean;
 
 import by.training.epam.data.ClientRole;
+import by.training.epam.data.Constant;
 
 public class Client {
 
@@ -16,7 +17,7 @@ public class Client {
 
     public Client(String str) {
         this();
-        String[] array = str.split(" ");
+        String[] array = str.split(Constant.DIVIDER_LINE);
         if (array.length >= 1) {
             login = array[0];
         }

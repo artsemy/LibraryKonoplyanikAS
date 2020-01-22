@@ -13,7 +13,8 @@ public class Registration implements Command {
         Client client = new Client(request);
         String res = null;
         try {
-            res = ClientService.registration(client);
+            ClientService clientService = new ClientService();
+            res = clientService.registration(client);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package by.training.epam.bean;
 
-import by.training.epam.data.Constant;
+import static by.training.epam.data.Constant.DIVIDER_BOOK_LINE;
+import static by.training.epam.data.Constant.EMPTY_STRING;
 
 public class Book {
 
@@ -8,14 +9,13 @@ public class Book {
     private String author;
 
     public Book() {
-        title = "";
-        author = "";
+        title = EMPTY_STRING;
+        author = EMPTY_STRING;
     }
 
     public Book(String str) {
         this();
-        String divider = Constant.dividerBookLine;
-        String[] array = str.split(divider);
+        String[] array = str.split(DIVIDER_BOOK_LINE);
         if (array.length != 1) {
             title = array[0];
             author = array[1];
@@ -32,7 +32,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? "" : title;
+        this.title = title == null ? EMPTY_STRING : title;
     }
 
     public String getAuthor() {
@@ -40,7 +40,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        this.author = author == null ? "" : title;
+        this.author = author == null ? EMPTY_STRING : title;
     }
 
     @Override
