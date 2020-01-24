@@ -4,15 +4,15 @@ import by.training.epam.bean.Client;
 
 import java.util.ArrayList;
 
-public class Group {
+public class GroupDAOImpl {
 
     private ArrayList<Client> clientList;
 
-    public Group() {
+    public GroupDAOImpl() {
         clientList = new ArrayList<>();
     }
 
-    public Group(ArrayList<Client> clientList) {
+    public GroupDAOImpl(ArrayList<Client> clientList) {
         this.clientList = clientList;
     }
 
@@ -36,7 +36,7 @@ public class Group {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Group group = (Group) o;
+        GroupDAOImpl group = (GroupDAOImpl) o;
         return clientList.equals(group.clientList);
     }
 

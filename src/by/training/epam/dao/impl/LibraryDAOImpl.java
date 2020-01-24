@@ -1,19 +1,20 @@
 package by.training.epam.dao.impl;
 
 import by.training.epam.bean.Book;
-import by.training.epam.dao.LibDAO;
+import by.training.epam.dao.LibraryDAO;
+import static by.training.epam.data.Constant.EMPTY_STRING;
 
 import java.util.ArrayList;
 
-public class Library implements LibDAO {
+public class LibraryDAOImpl implements LibraryDAO {
 
     private ArrayList<Book> bookList;
 
-    public Library() {
+    public LibraryDAOImpl() {
         bookList = new ArrayList<>();
     }
 
-    public Library(ArrayList<Book> bookList) {
+    public LibraryDAOImpl(ArrayList<Book> bookList) {
         this.bookList = bookList;
     }
 
@@ -27,7 +28,7 @@ public class Library implements LibDAO {
 
     @Override
     public boolean addBook(Book book) { //create
-        if (!checkBook(book)) {
+        if (book == null || bookList.contains(book)) {
             return false;
         }
         bookList.add(book);
@@ -35,21 +36,25 @@ public class Library implements LibDAO {
     }
 
     @Override
-    public boolean deleteBook(Book book) { //delete
-        return bookList.remove(book);
+    public boolean deleteBook(int id) { //delete
+        if (checkId(id)) {
+            bookList.remove(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean changeBook(Book book, int id) { //update
-        if (bookList.size() < id) {
-            return false;
+        if (checkId(id)) {
+            bookList.set(id, book);
+            return true;
         }
-        bookList.set(id, book);
-        return true;
+        return false;
     }
 
     @Override
-    public Library findLib(Book book) { //read
+    public LibraryDAOImpl findLib(Book book) { //read
         String title = book.getTitle();
         String author = book.getAuthor();
         ArrayList<Book> findList = new ArrayList<>();
@@ -60,39 +65,37 @@ public class Library implements LibDAO {
                 findList.add(b1);
             }
         }
-        return new Library(findList);
+        return new LibraryDAOImpl(findList);
     }
 
-    public Library findLibByTitle(String title) {
+    public LibraryDAOImpl findLibByTitle(String title) {
         ArrayList<Book> findList = new ArrayList<>();
-        if (title == null || title.equals("")) {
-            return new Library(bookList);
+        if (title == null || title.equals(EMPTY_STRING)) {
+            return new LibraryDAOImpl(bookList);
         }
         for (Book b: bookList) {
             if (b.getTitle().contains(title)) {
                 findList.add(b);
             }
         }
-        return new Library(findList);
+        return new LibraryDAOImpl(findList);
     }
 
-    public Library findLibByAuthor(String author) {
+    public LibraryDAOImpl findLibByAuthor(String author) {
         ArrayList<Book> findList = new ArrayList<>();
-        if (author == null || author.equals("")) {
-            return new Library(bookList);
+        if (author == null || author.equals(EMPTY_STRING)) {
+            return new LibraryDAOImpl(bookList);
         }
         for (Book b: bookList) {
             if (b.getAuthor().contains(author)) {
                 findList.add(b);
             }
         }
-        return new Library(findList);
+        return new LibraryDAOImpl(findList);
     }
 
-    private boolean checkBook(Book book) {
-        String s1 = book.getTitle();
-        String s2 = book.getAuthor();
-        if (s1 == null || s2 == null) {
+    private boolean checkId(int id) {
+        if (id < 0 || id >= bookList.size()) {
             return false;
         }
         return true;
@@ -102,13 +105,20 @@ public class Library implements LibDAO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Library library = (Library) o;
+        LibraryDAOImpl library = (LibraryDAOImpl) o;
         return bookList.equals(library.bookList);
     }
 
     @Override
     public int hashCode() {
         return bookList.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "LibraryDAOImpl{" +
+                "bookList=" + bookList +
+                '}';
     }
 
 }

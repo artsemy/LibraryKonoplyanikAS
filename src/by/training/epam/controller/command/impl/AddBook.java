@@ -1,8 +1,8 @@
 package by.training.epam.controller.command.impl;
 
-import by.training.epam.bean.Book;
 import by.training.epam.controller.command.Command;
 import by.training.epam.service.BookService;
+import by.training.epam.service.impl.BookServiceImpl;
 
 import java.io.IOException;
 
@@ -10,13 +10,12 @@ public class AddBook implements Command {
 
     @Override
     public String execute(String request) {
-        Book book = new Book(request);
         String response = null;
         try {
-            BookService bookService = new BookService();
-            response = bookService.addBook(book);
+            BookService bookService = new BookServiceImpl();
+            response = bookService.addBook(request);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //bad
         }
         return response;
     }

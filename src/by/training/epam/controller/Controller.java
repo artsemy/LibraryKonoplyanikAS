@@ -2,7 +2,9 @@ package by.training.epam.controller;
 
 import by.training.epam.controller.command.Command;
 import by.training.epam.controller.command.CommandProvider;
-import by.training.epam.data.Constant;
+
+import static by.training.epam.data.Constant.DIVIDER_LINE;
+import static by.training.epam.data.Constant.EMPTY_STRING;
 
 public class Controller {
 
@@ -19,10 +21,9 @@ public class Controller {
         private String actualRequest;
 
         RequestSplit(String str) {
-            String divider = Constant.DIVIDER_LINE;
-            String[] array = str.split(divider);
+            String[] array = str.split(DIVIDER_LINE);
             commandName = array[0];
-            actualRequest = str.replace(commandName, "").trim();
+            actualRequest = str.replace(commandName, EMPTY_STRING).trim();
         }
     }
 

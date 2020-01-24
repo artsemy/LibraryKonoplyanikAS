@@ -1,8 +1,8 @@
 package by.training.epam.controller.command.impl;
 
-import by.training.epam.bean.Client;
 import by.training.epam.controller.command.Command;
 import by.training.epam.service.ClientService;
+import by.training.epam.service.impl.ClientServiceImpl;
 
 import java.io.IOException;
 
@@ -10,13 +10,12 @@ public class Registration implements Command {
 
     @Override
     public String execute(String request) {
-        Client client = new Client(request);
         String res = null;
         try {
-            ClientService clientService = new ClientService();
-            res = clientService.registration(client);
+            ClientService clientService = new ClientServiceImpl();
+            res = clientService.registration(request);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //bad
         }
         return res;
     }

@@ -1,7 +1,6 @@
 package by.training.epam.bean;
 
 import by.training.epam.data.ClientRole;
-import by.training.epam.data.Constant;
 
 public class Client {
 
@@ -9,35 +8,18 @@ public class Client {
     private String password;
     private ClientRole clientRole;
 
+    private static final String DEFAULT_VALUE = "";
+
     public Client() {
-        login = "";
-        password = "";
+        login = DEFAULT_VALUE;
+        password = DEFAULT_VALUE;
         clientRole = ClientRole.NO_ONE;
     }
 
-    public Client(String str) {
-        this();
-        String[] array = str.split(Constant.DIVIDER_LINE);
-        if (array.length >= 1) {
-            login = array[0];
-        }
-        if (array.length >= 2) {
-            password = array[1];
-        }
-        if (array.length == 3) {
-            clientRole = ClientRole.valueOf(array[2].toUpperCase());
-        }
-    }
-
-    public Client(String login, String password, String role) {
+    public Client(String login, String password, ClientRole role) {
         setLogin(login);
         setPassword(password);
-        ClientRole clientRole = ClientRole.NO_ONE;
-        try {
-            clientRole = ClientRole.valueOf(role.toUpperCase());
-        } catch (IllegalArgumentException ignored){
-        }
-        setClientRole(clientRole);
+        setClientRole(role);
     }
 
     public String getLogin() {
@@ -45,7 +27,7 @@ public class Client {
     }
 
     public void setLogin(String login) {
-        this.login = login == null ? "" : login;
+        this.login = login;
     }
 
     public String getPassword() {
@@ -53,7 +35,7 @@ public class Client {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? "" : password;
+        this.password = password;
     }
 
     public ClientRole getClientRole() {
@@ -68,8 +50,8 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client user = (Client) o;
-        return login.equals(user.login) && password.equals(user.password);
+        Client client = (Client) o;
+        return login.equals(client.login) && password.equals(client.password) && clientRole.equals(client.getClientRole());
     }
 
     @Override
@@ -78,14 +60,16 @@ public class Client {
         int res = 1;
         res = res*p + login.hashCode();
         res = res*p + password.hashCode();
+        res = res*p + clientRole.hashCode();
         return res;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Client{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", clientRole=" + clientRole +
                 '}';
     }
 

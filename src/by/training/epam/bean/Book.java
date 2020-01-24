@@ -1,25 +1,15 @@
 package by.training.epam.bean;
 
-import static by.training.epam.data.Constant.DIVIDER_BOOK_LINE;
-import static by.training.epam.data.Constant.EMPTY_STRING;
-
 public class Book {
 
     private String title;
     private String author;
 
-    public Book() {
-        title = EMPTY_STRING;
-        author = EMPTY_STRING;
-    }
+    private static final String DEFAULT_VALUE = "";
 
-    public Book(String str) {
-        this();
-        String[] array = str.split(DIVIDER_BOOK_LINE);
-        if (array.length != 1) {
-            title = array[0];
-            author = array[1];
-        }
+    public Book() {
+        title = DEFAULT_VALUE;
+        author = DEFAULT_VALUE;
     }
 
     public Book(String title, String author) {
@@ -32,7 +22,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? EMPTY_STRING : title;
+        this.title = title;
     }
 
     public String getAuthor() {
@@ -40,7 +30,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        this.author = author == null ? EMPTY_STRING : title;
+        this.author = author;
     }
 
     @Override

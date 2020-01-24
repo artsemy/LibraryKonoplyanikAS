@@ -2,8 +2,8 @@ package by.training.epam.util;
 
 import by.training.epam.bean.Book;
 import by.training.epam.bean.Client;
-import by.training.epam.dao.impl.Group;
-import by.training.epam.dao.impl.Library;
+import by.training.epam.dao.impl.GroupDAOImpl;
+import by.training.epam.dao.impl.LibraryDAOImpl;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import static by.training.epam.data.Constant.*;
 
 public class Writer {
 
-    public static void writeFileBook(String fileName, Library library) throws IOException {
+    public static void writeFileBook(String fileName, LibraryDAOImpl library) throws IOException {
         FileWriter writer = new FileWriter(fileName, false);
         List<Book> list = library.getBookList();
         for (Book book: list) {
@@ -23,7 +23,7 @@ public class Writer {
         writer.close();
     }
 
-    public static void writeFileUser(String fileName, Group group) throws IOException {
+    public static void writeFileUser(String fileName, GroupDAOImpl group) throws IOException {
         FileWriter writer = new FileWriter(fileName, false);
         List<Client> list = group.getClientList();
         for (Client c: list) {
