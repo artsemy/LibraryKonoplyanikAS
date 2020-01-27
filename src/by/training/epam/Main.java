@@ -1,6 +1,8 @@
 package by.training.epam;
 
 import by.training.epam.controller.Controller;
+import by.training.epam.controller.command.exception.BadFileControllerException;
+import by.training.epam.controller.command.exception.BadRequestControllerException;
 
 import java.util.Scanner;
 
@@ -13,7 +15,11 @@ public class Main {
         Controller controller = new Controller();
         do {
             request = scanner.nextLine();
-            response = controller.start(request);
+            try {
+                response = controller.start(request);
+            } catch (BadRequestControllerException | BadFileControllerException e) {
+                response = e.getMessage();
+            }
             System.out.println(response);
         } while (!request.equals("exit"));
     }

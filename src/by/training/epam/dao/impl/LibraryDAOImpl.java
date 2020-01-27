@@ -2,6 +2,7 @@ package by.training.epam.dao.impl;
 
 import by.training.epam.bean.Book;
 import by.training.epam.dao.LibraryDAO;
+
 import static by.training.epam.data.Constant.EMPTY_STRING;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         return new LibraryDAOImpl(findList);
     }
 
-    public LibraryDAOImpl findLibByTitle(String title) {
+    private LibraryDAOImpl findLibByTitle(String title) {
         ArrayList<Book> findList = new ArrayList<>();
         if (title == null || title.equals(EMPTY_STRING)) {
             return new LibraryDAOImpl(bookList);
@@ -81,7 +82,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         return new LibraryDAOImpl(findList);
     }
 
-    public LibraryDAOImpl findLibByAuthor(String author) {
+    private LibraryDAOImpl findLibByAuthor(String author) {
         ArrayList<Book> findList = new ArrayList<>();
         if (author == null || author.equals(EMPTY_STRING)) {
             return new LibraryDAOImpl(bookList);
@@ -95,10 +96,7 @@ public class LibraryDAOImpl implements LibraryDAO {
     }
 
     private boolean checkId(int id) {
-        if (id < 0 || id >= bookList.size()) {
-            return false;
-        }
-        return true;
+        return id >= 0 && id < bookList.size();
     }
 
     @Override

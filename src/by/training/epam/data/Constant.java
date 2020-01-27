@@ -8,5 +8,8 @@ public class Constant {
     public final static String DIVIDER_LINE = " ";
     public final static String END_LINE = "\n";
     public final static String EMPTY_STRING = "";
+    public final static String MESSAGE_CANT_READ = "can't read file";
+    public final static String MESSAGE_CANT_WRITE = "can't write file";
+    public final static String MESSAGE_CANT_VALIDATE_REQUEST = "can't validate request";
 
 }

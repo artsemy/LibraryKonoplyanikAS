@@ -2,38 +2,49 @@ package by.training.epam.service.impl;
 
 import by.training.epam.bean.Client;
 import by.training.epam.service.ClientService;
+import by.training.epam.service.exception.BadFileGroupServiceException;
+import by.training.epam.service.exception.BadRequestGroupServiceException;
 import by.training.epam.util.Reader;
 import by.training.epam.util.Writer;
 import by.training.epam.dao.impl.GroupDAOImpl;
 import by.training.epam.data.ClientRole;
 import by.training.epam.data.ClientRoleHolder;
 
+import static by.training.epam.data.Constant.*;
+
 import java.io.IOException;
 import java.util.List;
 
-import static by.training.epam.data.Constant.DIVIDER_LINE;
-import static by.training.epam.data.Constant.PATH_TO_USER_FILE;
 
 public class ClientServiceImpl implements ClientService {
 
     private GroupDAOImpl group;
+
     private final String REGISTRATION_OK = "Hello newbie";
     private final String REGISTRATION_NOT_OK = "can't register, bad login";
     private final String SIGN_IN_OK = "welcome back";
     private final String SIGN_IN_NOT_OK = "bad login or password";
 
-    public ClientServiceImpl() throws IOException {
-        group = Reader.readFileClient(PATH_TO_USER_FILE);
+    public ClientServiceImpl() throws BadFileGroupServiceException {
+        try {
+            group = Reader.readFileClient(PATH_TO_USER_FILE);
+        } catch (IOException e) {
+            throw new BadFileGroupServiceException(MESSAGE_CANT_READ);
+        }
     }
 
-    private void saveChangeGroup(boolean needUpdate) throws IOException {
+    private void saveChangeGroup(boolean needUpdate) throws BadFileGroupServiceException {
         if (needUpdate) {
-            Writer.writeFileUser(PATH_TO_USER_FILE, group);
+            try {
+                Writer.writeFileUser(PATH_TO_USER_FILE, group);
+            } catch (IOException e) {
+                throw new BadFileGroupServiceException(MESSAGE_CANT_WRITE, e);
+            }
         }
     }
 
     @Override
-    public String registration(String request) throws IOException {
+    public String registration(String request) throws BadFileGroupServiceException, BadRequestGroupServiceException {
         Client client = validateClient(request);
         List<Client> clientList = group.getClientList();
         for (Client c: clientList) {
@@ -49,8 +60,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String signIn(String request) {
-        Client client = validateClient(request);
+    public String signIn(String request) throws BadRequestGroupServiceException {
+        Client client = validateClient(request.trim());
         List<Client> clientList = group.getClientList();
         for (Client c: clientList) {
             if (client.equals(c)) {
@@ -61,7 +72,10 @@ public class ClientServiceImpl implements ClientService {
         return SIGN_IN_NOT_OK;
     }
 
-    private Client validateClient(String request) {
+    private Client validateClient(String request) throws BadRequestGroupServiceException {
+        if (request == null) {
+            throw new BadRequestGroupServiceException(MESSAGE_CANT_VALIDATE_REQUEST);
+        }
         Client client = new Client();
         String[] array = request.split(DIVIDER_LINE);
         client.setLogin(array[0]);

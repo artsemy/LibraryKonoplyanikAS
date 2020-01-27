@@ -17,15 +17,12 @@ import static by.training.epam.data.Constant.*;
 
 public class BookServiceImpl implements BookService {
 
-    private static final String ADDED = "added";
-    private static final String DELETED = "deleted";
-    private static final String CHANGED = "changed";
-    private static final String FOUNDED = "founded";
-    private static final String SUCCESS = "book";
-    private static final String NOT_SUCCESS = "error, book not ";
-    private static final String MESSAGE_CANT_READ = "can't read file";
-    private static final String MESSAGE_CANT_WRITE = "can't write file";
-    private static final String MESSAGE_CANT_VALIDATE_REQUEST = "can't validate request";
+    private final String ADDED = "added";
+    private final String DELETED = "deleted";
+    private final String CHANGED = "changed";
+    private final String FOUNDED = "founded";
+    private final String SUCCESS = "book ";
+    private final String NOT_SUCCESS = "error, book not ";
 
     private LibraryDAOImpl library;
 
@@ -45,7 +42,7 @@ public class BookServiceImpl implements BookService {
     public String addBook(String sBook) throws BadFileBookServiceException, BadRequestBookServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
-            Book book = validateBook(sBook);
+            Book book = validateBook(sBook.trim());
             needUpdate = library.addBook(book);
             saveChangeLib(needUpdate);
         }
@@ -56,7 +53,7 @@ public class BookServiceImpl implements BookService {
     public String deleteBook(String sId) throws BadFileBookServiceException, BadRequestBookServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            int id = validateId(sId);
+            int id = validateId(sId.trim());
             needUpdate = library.deleteBook(id);
             saveChangeLib(needUpdate);
         }
@@ -67,9 +64,9 @@ public class BookServiceImpl implements BookService {
     public String changeBook(String sBook) throws BadFileBookServiceException, BadRequestBookServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            int id = validateId(sBook);
+            int id = validateId(sBook.trim());
             sBook = sBook.replace(String.valueOf(id), EMPTY_STRING);
-            Book book = validateBook(sBook);
+            Book book = validateBook(sBook.trim());
             needUpdate = library.changeBook(book, id);
             saveChangeLib(needUpdate);
         }
@@ -82,8 +79,9 @@ public class BookServiceImpl implements BookService {
         LibraryDAOImpl lib = library.findLib(book);
         List<Book> bookList = lib.getBookList();
         StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
+        int i = 0;
         for (Book b: bookList) {
-            res.append(b.getTitle()).append(DIVIDER_BOOK_LINE).append(b.getAuthor()).append(END_LINE);
+            res.append(b.getTitle()).append(DIVIDER_BOOK_LINE).append(b.getAuthor()).append(DIVIDER_LINE).append(i++).append(END_LINE);
         }
         return res.toString();
     }
@@ -93,7 +91,7 @@ public class BookServiceImpl implements BookService {
             throw new BadRequestBookServiceException(MESSAGE_CANT_VALIDATE_REQUEST);
         }
         String[] array = sBook.split(DIVIDER_BOOK_LINE);
-        if (array.length == 2) {
+        if (array.length >= 2) {
             return new Book(array[0], array[1]);
         }
         return null;
@@ -105,9 +103,9 @@ public class BookServiceImpl implements BookService {
         }
         String[] array = sBook.split(DIVIDER_BOOK_LINE);
         if (array.length == 1) {
-            return new Book(array[0], EMPTY_STRING);
+            return new Book(array[0].trim(), EMPTY_STRING);
         }
-        return new Book(array[0], array[1]);
+        return new Book(array[0].trim(), array[1]);
     }
 
     private int validateId(String sId) throws BadRequestBookServiceException {
@@ -121,9 +119,9 @@ public class BookServiceImpl implements BookService {
         return id;
     }
 
-    private String result(String s, boolean worked) {
+    private String result(String sCommand, boolean worked) {
         String res = worked ? SUCCESS : NOT_SUCCESS;
-        res = res + s;
+        res = res + sCommand;
         return res;
     }
 

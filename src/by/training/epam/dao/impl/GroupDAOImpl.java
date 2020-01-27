@@ -1,10 +1,11 @@
 package by.training.epam.dao.impl;
 
 import by.training.epam.bean.Client;
+import by.training.epam.dao.GroupDAO;
 
 import java.util.ArrayList;
 
-public class GroupDAOImpl {
+public class GroupDAOImpl implements GroupDAO {
 
     private ArrayList<Client> clientList;
 
@@ -24,8 +25,9 @@ public class GroupDAOImpl {
         this.clientList = clientList;
     }
 
+    @Override
     public boolean addClient(Client client) {
-        if (client != null) {
+        if (client != null && !clientList.contains(client)) {
             clientList.add(client);
             return true;
         }

@@ -51,7 +51,7 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return login.equals(client.login) && password.equals(client.password) && clientRole.equals(client.getClientRole());
+        return login.equals(client.login) && password.equals(client.password); //role!!!
     }
 
     @Override
