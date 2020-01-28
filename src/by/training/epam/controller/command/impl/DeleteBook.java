@@ -13,7 +13,7 @@ public class DeleteBook implements Command {
     public String execute(String request) throws BadFileBookServiceException, BadRequestBookServiceException {
         String res;
         BookService bookService = new BookServiceImpl();
-        res = bookService.deleteBook(request);
+        res = bookService.delete(request);
         return res;
     }
 

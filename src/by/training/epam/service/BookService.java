@@ -5,12 +5,12 @@ import by.training.epam.service.exception.BadRequestBookServiceException;
 
 public interface BookService {
 
-    public String addBook(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
+    public String create(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
 
-    public String deleteBook(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
+    public String read(String request) throws BadRequestBookServiceException, BadFileBookServiceException;
 
-    public String changeBook(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
+    public String update(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
 
-    public String findBook(String request) throws BadRequestBookServiceException;
+    public String delete(String request) throws BadFileBookServiceException, BadRequestBookServiceException;
 
 }

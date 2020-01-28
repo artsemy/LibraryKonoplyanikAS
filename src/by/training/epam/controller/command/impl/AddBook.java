@@ -12,7 +12,7 @@ public class AddBook implements Command {
     public String execute(String request) throws BadFileBookServiceException, BadRequestBookServiceException {
         String response;
         BookService bookService = new BookServiceImpl();
-        response = bookService.addBook(request);
+        response = bookService.create(request);
         return response;
     }
 

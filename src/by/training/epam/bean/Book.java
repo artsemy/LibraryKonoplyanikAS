@@ -4,17 +4,24 @@ public class Book {
 
     private String title;
     private String author;
+    private int id;
 
-    private static final String DEFAULT_VALUE = "";
-
-    public Book() {
-        title = DEFAULT_VALUE;
-        author = DEFAULT_VALUE;
-    }
+//    private static final String DEFAULT_VALUE = "";
+//
+//    public Book() {
+//        title = DEFAULT_VALUE;
+//        author = DEFAULT_VALUE;
+//    }
 
     public Book(String title, String author) {
         setTitle(title);
         setAuthor(author);
+    }
+
+    public Book(String title, String author, int id) {
+        setTitle(title);
+        setAuthor(author);
+        setId(id);
     }
 
     public String getTitle() {
@@ -33,12 +40,20 @@ public class Book {
         this.author = author;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return title.equals(book.title) && author.equals(book.author);
+        return title.equals(book.title) && author.equals(book.author) && id==book.id;
     }
 
     @Override
@@ -47,6 +62,7 @@ public class Book {
         int res = 1;
         res = res*n + title.hashCode();
         res = res*n + author.hashCode();
+        res = res*n + id;
         return res;
     }
 
@@ -55,6 +71,7 @@ public class Book {
         return "Book{" +
                 "title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", id=" + id +
                 '}';
     }
 

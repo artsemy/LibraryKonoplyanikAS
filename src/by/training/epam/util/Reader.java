@@ -2,8 +2,10 @@ package by.training.epam.util;
 
 import by.training.epam.bean.Book;
 import by.training.epam.bean.Client;
+import by.training.epam.dao.LibraryDAO;
+import by.training.epam.dao.exception.BadFileLibraryDAOException;
 import by.training.epam.dao.impl.GroupDAOImpl;
-import by.training.epam.dao.impl.LibraryDAOImpl;
+import by.training.epam.dao.impl.LibraryDAOImplSingleton;
 import by.training.epam.data.ClientRole;
 
 import java.io.BufferedReader;
@@ -15,17 +17,16 @@ import static by.training.epam.data.Constant.DIVIDER_LINE;
 
 public class Reader {
 
-    public static LibraryDAOImpl readFileBook(String fileName) throws IOException {
-        LibraryDAOImpl library = new LibraryDAOImpl();
+    public static void readFileBook(String fileName) throws IOException, BadFileLibraryDAOException {
+        LibraryDAO library = LibraryDAOImplSingleton.getInstance();
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line;
         while ( (line = reader.readLine()) != null) {
             Book book = validateBook(line);
             if (book != null) {
-                library.addBook(book);
+                library.create(book);
             }
         }
-        return library;
     }
 
     public static GroupDAOImpl readFileClient(String fileName) throws IOException {
@@ -43,8 +44,8 @@ public class Reader {
 
     private static Book validateBook(String line) {
         String[] array = line.split(DIVIDER_BOOK_LINE);
-        if (array.length == 2) {
-            return new Book(array[0], array[1]);
+        if (array.length == 3) {
+            return new Book(array[0], array[1], Integer.parseInt(array[2]));
         }
         return null;
     }

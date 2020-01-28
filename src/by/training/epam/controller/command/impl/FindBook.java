@@ -12,7 +12,7 @@ public class FindBook implements Command {
     public String execute(String request) throws BadFileBookServiceException, BadRequestBookServiceException {
         String response;
         BookService bookService = new BookServiceImpl();
-        response = bookService.findBook(request);
+        response = bookService.read(request);
         return response;
     }
 

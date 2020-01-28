@@ -13,7 +13,7 @@ public class ChangeBook implements Command {
     public String execute(String request) throws BadFileBookServiceException, BadRequestBookServiceException {
         String response;
         BookService bookService = new BookServiceImpl();
-        response = bookService.changeBook(request);
+        response = bookService.update(request);
         return response;
     }
 
