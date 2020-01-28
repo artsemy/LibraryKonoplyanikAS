@@ -48,7 +48,7 @@ public class BookSourceImpl implements BookSource {
         writer.close();
     }
 
-    private static Book parseBook(String line) {
+    private Book parseBook(String line) {
         if (line == null || line.equals(EMPTY_STRING)) {
             return null;
         }

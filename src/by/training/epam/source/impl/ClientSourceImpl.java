@@ -48,7 +48,7 @@ public class ClientSourceImpl implements ClientSource {
         writer.close();
     }
 
-    private static Client validateClient(String line) {
+    private Client validateClient(String line) {
         if (line == null || line.equals(EMPTY_STRING)) {
             return null;
         }

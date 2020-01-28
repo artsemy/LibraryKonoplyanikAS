@@ -5,6 +5,6 @@ import by.training.epam.dao.exception.BadFileGroupDAOException;
 
 public interface GroupDAO {
 
-    public boolean addClient(Client client) throws BadFileGroupDAOException;
+    boolean addClient(Client client) throws BadFileGroupDAOException;
 
 }

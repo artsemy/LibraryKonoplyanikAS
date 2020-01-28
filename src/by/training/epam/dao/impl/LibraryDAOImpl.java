@@ -78,29 +78,29 @@ public class LibraryDAOImpl implements LibraryDAO {
     }
 
     private Collection<Book> findLibByTitle(String title) {
-        Set<Book> findList = new TreeSet<>();
+        Set<Book> found = new TreeSet<>();
         if (title == null || title.equals(EMPTY_STRING)) {
             return booksCache.values();
         }
         for (Book b: booksCache.values()) {
             if (b.getTitle().contains(title)) {
-                findList.add(b);
+                found.add(b);
             }
         }
-        return findList;
+        return found;
     }
 
     private Collection<Book> findLibByAuthor(String author) {
-        Set<Book> findList = new TreeSet<>();;
+        Set<Book> found = new TreeSet<>();
         if (author == null || author.equals(EMPTY_STRING)) {
             return booksCache.values();
         }
         for (Book b: booksCache.values()) {
             if (b.getAuthor().contains(author)) {
-                findList.add(b);
+                found.add(b);
             }
         }
-        return findList;
+        return found;
     }
 
     private int createID() {
