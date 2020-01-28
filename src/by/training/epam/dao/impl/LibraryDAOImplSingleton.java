@@ -76,9 +76,9 @@ public class LibraryDAOImplSingleton implements LibraryDAO {
     }
 
     @Override
-    public boolean update(Book book, int id) throws BadFileLibraryDAOException {
-        if (bookMap.containsKey(id)) {
-            bookMap.replace(id, book);
+    public boolean update(Book book) throws BadFileLibraryDAOException {
+        if (bookMap.containsKey(book.getId())) {
+            bookMap.replace(book.getId(), book);
             upload();
             return true;
         }

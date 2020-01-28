@@ -57,11 +57,9 @@ public class BookServiceImpl implements BookService {
     public String update(String sBook) throws BadFileBookServiceException, BadRequestBookServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            int id = validateId(sBook.trim());
-            sBook = sBook.replace(String.valueOf(id), EMPTY_STRING);
-            Book book = validateBook(sBook.trim());
+            Book book = validateBookUpdate(sBook.trim());
             try {
-                needUpdate = LibraryDAOImplSingleton.getInstance().update(book, id);
+                needUpdate = LibraryDAOImplSingleton.getInstance().update(book);
             } catch (BadFileLibraryDAOException e) {
                 throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
             }
@@ -106,6 +104,15 @@ public class BookServiceImpl implements BookService {
             return new Book(array[0].trim(), EMPTY_STRING);
         }
         return new Book(array[0].trim(), array[1]);
+    }
+
+    private Book validateBookUpdate(String sBook) throws BadRequestBookServiceException {
+        if (sBook == null) {
+            throw new BadRequestBookServiceException(MESSAGE_CANT_VALIDATE_REQUEST);
+        }
+        String[] array = sBook.split(DIVIDER_BOOK_LINE);
+        String[] array2 = array[1].split(DIVIDER_LINE);
+        return new Book(array[0], array2[0], Integer.parseInt(array2[1]));
     }
 
     private int validateId(String sId) throws BadRequestBookServiceException {

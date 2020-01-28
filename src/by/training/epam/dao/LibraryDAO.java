@@ -7,7 +7,7 @@ public interface LibraryDAO {
 
     boolean create(Book book) throws BadFileLibraryDAOException;
     boolean delete(int id) throws BadFileLibraryDAOException;
-    boolean update(Book book, int id) throws BadFileLibraryDAOException;
+    boolean update(Book book) throws BadFileLibraryDAOException;
     boolean read(Book book);
 
 }
