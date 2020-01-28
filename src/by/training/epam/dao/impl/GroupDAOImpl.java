@@ -15,7 +15,7 @@ import static by.training.epam.data.Constant.*;
 public class GroupDAOImpl implements GroupDAO {
 
     private static GroupDAOImpl singleton;
-    private static Set<Client> clientSet;
+    private static Set<Client> clientsCache;
 
     private GroupDAOImpl() throws BadFileGroupDAOException {
         download();
@@ -29,11 +29,11 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     public Set<Client> getClientSet() {
-        return clientSet;
+        return clientsCache;
     }
 
-    private static void download() throws BadFileGroupDAOException {
-        clientSet = new TreeSet<>();
+    private void download() throws BadFileGroupDAOException {
+        clientsCache = new TreeSet<>();
         try {
             Reader.readFileClient(PATH_TO_USER_FILE);
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class GroupDAOImpl implements GroupDAO {
         }
     }
 
-    private static void upload() throws BadFileGroupDAOException {
+    private void upload() throws BadFileGroupDAOException {
         try {
             Writer.writeFileUser(PATH_TO_USER_FILE);
         } catch (IOException e) {
@@ -51,8 +51,8 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public boolean addClient(Client client) throws BadFileGroupDAOException {
-        if (client != null && !clientSet.contains(client)) {
-            clientSet.add(client);
+        if (client != null && !clientsCache.contains(client)) {
+            clientsCache.add(client);
             upload();
             return true;
         }

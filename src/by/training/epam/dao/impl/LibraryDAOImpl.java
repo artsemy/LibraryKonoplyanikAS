@@ -13,10 +13,9 @@ import static by.training.epam.data.Constant.*;
 
 public class LibraryDAOImpl implements LibraryDAO {
 
-    private static Map<Integer, Book> bookMap;
-    private static final int MAX_ID = 100;
-
     private static LibraryDAOImpl instance;
+    private static Map<Integer, Book> booksCache;
+    private static final int MAX_ID = 100;
 
     private LibraryDAOImpl() throws BadFileLibraryDAOException {
         download();
@@ -30,11 +29,11 @@ public class LibraryDAOImpl implements LibraryDAO {
     }
 
     public Map<Integer, Book> getBookMap() {
-        return bookMap;
+        return booksCache;
     }
 
     private static void download() throws BadFileLibraryDAOException {
-        bookMap = new TreeMap<>();
+        booksCache = new TreeMap<>();
         try {
             Reader.readFileBook(PATH_TO_BOOK_FILE);
         } catch (IOException e) {
@@ -53,12 +52,12 @@ public class LibraryDAOImpl implements LibraryDAO {
     @Override
     public boolean create(Book book) throws BadFileLibraryDAOException {
         download();
-        if (book == null || bookMap.containsValue(book)) {
+        if (book == null || booksCache.containsValue(book)) {
             return false;
         }
         int id = createID();
         book.setId(id);
-        bookMap.put(id, book);
+        booksCache.put(id, book);
         upload();
         return true;
     }
@@ -67,8 +66,8 @@ public class LibraryDAOImpl implements LibraryDAO {
     @Override
     public boolean delete(int id) throws BadFileLibraryDAOException {
         download();
-        if (bookMap.containsKey(id)) {
-            bookMap.remove(id);
+        if (booksCache.containsKey(id)) {
+            booksCache.remove(id);
             upload();
             return true;
         }
@@ -77,8 +76,8 @@ public class LibraryDAOImpl implements LibraryDAO {
 
     @Override
     public boolean update(Book book) throws BadFileLibraryDAOException {
-        if (bookMap.containsKey(book.getId())) {
-            bookMap.replace(book.getId(), book);
+        if (booksCache.containsKey(book.getId())) {
+            booksCache.replace(book.getId(), book);
             upload();
             return true;
         }
@@ -89,24 +88,24 @@ public class LibraryDAOImpl implements LibraryDAO {
     public boolean read(Book book) {
         String title = book.getTitle();
         String author = book.getAuthor();
-        bookMap = new TreeMap<>();
+        booksCache = new TreeMap<>();
         Map<Integer, Book> foundByTitle = findLibByTitle(title);
         Map<Integer, Book> foundByAuthor = findLibByAuthor(author);
         for (Book b: foundByTitle.values()) {
             if (foundByAuthor.containsKey(b.getId())) {
-                bookMap.put(b.getId(), b);
+                booksCache.put(b.getId(), b);
             }
         }
-        return !bookMap.isEmpty();
+        return !booksCache.isEmpty();
     }
 
 
     private Map<Integer, Book> findLibByTitle(String title) {
         Map<Integer, Book> findList = new TreeMap<>();
         if (title == null || title.equals(EMPTY_STRING)) {
-            return bookMap;
+            return booksCache;
         }
-        for (Book b: bookMap.values()) {
+        for (Book b: booksCache.values()) {
             if (b.getTitle().contains(title)) {
                 findList.put(b.getId(), b);
             }
@@ -117,9 +116,9 @@ public class LibraryDAOImpl implements LibraryDAO {
     private Map<Integer, Book> findLibByAuthor(String author) {
         Map<Integer, Book> findList = new TreeMap<>();
         if (author == null || author.equals(EMPTY_STRING)) {
-            return bookMap;
+            return booksCache;
         }
-        for (Book b: bookMap.values()) {
+        for (Book b: booksCache.values()) {
             if (b.getAuthor().contains(author)) {
                 findList.put(b.getId(), b);
             }
@@ -132,7 +131,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         int id;
         do {
             id = random.nextInt(MAX_ID);
-        } while (!bookMap.containsKey(id));
+        } while (!booksCache.containsKey(id));
         return id;
     }
 
