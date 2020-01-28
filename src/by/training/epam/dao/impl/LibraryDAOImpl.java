@@ -11,20 +11,20 @@ import java.util.*;
 
 import static by.training.epam.data.Constant.*;
 
-public class LibraryDAOImplSingleton implements LibraryDAO {
+public class LibraryDAOImpl implements LibraryDAO {
 
     private static Map<Integer, Book> bookMap;
     private static final int MAX_ID = 100;
 
-    private static LibraryDAOImplSingleton instance;
+    private static LibraryDAOImpl instance;
 
-    private LibraryDAOImplSingleton() throws BadFileLibraryDAOException {
+    private LibraryDAOImpl() throws BadFileLibraryDAOException {
         download();
     }
 
-    public static synchronized LibraryDAOImplSingleton getInstance() throws BadFileLibraryDAOException {
+    public static synchronized LibraryDAOImpl getInstance() throws BadFileLibraryDAOException {
         if (instance == null) {
-            instance = new LibraryDAOImplSingleton();
+            instance = new LibraryDAOImpl();
         }
         return instance;
     }

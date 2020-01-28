@@ -12,18 +12,18 @@ import java.util.TreeSet;
 
 import static by.training.epam.data.Constant.*;
 
-public class GroupDAOImplSingleton implements GroupDAO {
+public class GroupDAOImpl implements GroupDAO {
 
-    private static GroupDAOImplSingleton singleton;
+    private static GroupDAOImpl singleton;
     private static Set<Client> clientSet;
 
-    private GroupDAOImplSingleton() throws BadFileGroupDAOException {
+    private GroupDAOImpl() throws BadFileGroupDAOException {
         download();
     }
 
-    public static synchronized GroupDAOImplSingleton getInstance() throws BadFileGroupDAOException {
+    public static synchronized GroupDAOImpl getInstance() throws BadFileGroupDAOException {
         if (singleton == null) {
-            singleton = new GroupDAOImplSingleton();
+            singleton = new GroupDAOImpl();
         }
         return singleton;
     }
