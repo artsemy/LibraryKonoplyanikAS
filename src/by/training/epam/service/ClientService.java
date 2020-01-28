@@ -9,6 +9,6 @@ public interface ClientService {
 
     public String registration(String request) throws BadFileGroupServiceException, BadRequestGroupServiceException;
 
-    public String signIn(String request) throws BadRequestGroupServiceException;
+    public String signIn(String request) throws BadRequestGroupServiceException, BadFileGroupServiceException;
 
 }

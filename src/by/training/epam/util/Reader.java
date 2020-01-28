@@ -2,9 +2,11 @@ package by.training.epam.util;
 
 import by.training.epam.bean.Book;
 import by.training.epam.bean.Client;
+import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.LibraryDAO;
+import by.training.epam.dao.exception.BadFileGroupDAOException;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
-import by.training.epam.dao.impl.GroupDAOImpl;
+import by.training.epam.dao.impl.GroupDAOImplSingleton;
 import by.training.epam.dao.impl.LibraryDAOImplSingleton;
 import by.training.epam.data.ClientRole;
 
@@ -29,8 +31,8 @@ public class Reader {
         }
     }
 
-    public static GroupDAOImpl readFileClient(String fileName) throws IOException {
-        GroupDAOImpl group = new GroupDAOImpl();
+    public static void readFileClient(String fileName) throws IOException, BadFileGroupDAOException {
+        GroupDAO group = GroupDAOImplSingleton.getInstance();
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line;
         while ( (line = reader.readLine()) != null) {
@@ -39,7 +41,6 @@ public class Reader {
                 group.addClient(client);
             }
         }
-        return group;
     }
 
     private static Book validateBook(String line) {

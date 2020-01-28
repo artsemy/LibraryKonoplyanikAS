@@ -52,10 +52,10 @@ public class LibraryDAOImplSingleton implements LibraryDAO {
 
     @Override
     public boolean create(Book book) throws BadFileLibraryDAOException {
+        download();
         if (book == null || bookMap.containsValue(book)) {
             return false;
         }
-        download();
         int id = createID();
         book.setId(id);
         bookMap.put(id, book);
@@ -66,8 +66,8 @@ public class LibraryDAOImplSingleton implements LibraryDAO {
 
     @Override
     public boolean delete(int id) throws BadFileLibraryDAOException {
+        download();
         if (bookMap.containsKey(id)) {
-            download();
             bookMap.remove(id);
             upload();
             return true;

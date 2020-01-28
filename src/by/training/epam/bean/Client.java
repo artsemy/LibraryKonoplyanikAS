@@ -2,7 +2,7 @@ package by.training.epam.bean;
 
 import by.training.epam.data.ClientRole;
 
-public class Client {
+public class Client implements Comparable{
 
     private String login;
     private String password;
@@ -71,6 +71,12 @@ public class Client {
                 ", password='" + password + '\'' +
                 ", clientRole=" + clientRole +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Client client = (Client) o;
+        return login.compareTo(client.login);
     }
 
 }
