@@ -8,5 +8,16 @@ public enum CommandName {
     DELETE_BOOK,
     CHANGE_BOOK,
     WRONG_REQUEST,
-    EXIT
+    EXIT;
+
+    public static CommandName parse(String command) {
+        CommandName[] array = CommandName.values();
+        for (CommandName name: array) {
+            if (name.toString().equals(command.toUpperCase())) {
+                return name;
+            }
+        }
+        return null;
+    }
+
 }

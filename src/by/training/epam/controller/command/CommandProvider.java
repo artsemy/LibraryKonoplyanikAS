@@ -22,13 +22,12 @@ public final class CommandProvider {
     }
 
     public Command getCommand(String cName){
-        CommandName commandName;
+        CommandName commandName = CommandName.parse(cName);
         Command command;
-        try {
-            commandName = CommandName.valueOf(cName.toUpperCase());
-            command = commands.get(commandName);
-        } catch (IllegalArgumentException | NullPointerException e) {
+        if (commandName == null) {
             command = commands.get(CommandName.WRONG_REQUEST);
+        } else {
+            command = commands.get(commandName);
         }
         return command;
     }
