@@ -3,8 +3,8 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Client;
 import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
-import by.training.epam.util.Reader;
-import by.training.epam.util.Writer;
+import by.training.epam.source.ClientSource;
+import by.training.epam.source.impl.ClientSourceImpl;
 
 import java.io.IOException;
 import java.util.Set;
@@ -15,9 +15,11 @@ import static by.training.epam.data.Constant.*;
 public class GroupDAOImpl implements GroupDAO {
 
     private static GroupDAOImpl singleton;
-    private static Set<Client> clientsCache;
+    private static ClientSource source;
+    private static final Set<Client> clientsCache = new TreeSet<>();
 
     private GroupDAOImpl() throws BadFileGroupDAOException {
+        source = ClientSourceImpl.getInstance();
         download();
     }
 
@@ -28,27 +30,6 @@ public class GroupDAOImpl implements GroupDAO {
         return singleton;
     }
 
-    public Set<Client> getClientSet() {
-        return clientsCache;
-    }
-
-    private void download() throws BadFileGroupDAOException {
-        clientsCache = new TreeSet<>();
-        try {
-            Reader.readFileClient(PATH_TO_USER_FILE);
-        } catch (IOException e) {
-            throw new BadFileGroupDAOException(MESSAGE_CANT_READ, e);
-        }
-    }
-
-    private void upload() throws BadFileGroupDAOException {
-        try {
-            Writer.writeFileUser(PATH_TO_USER_FILE);
-        } catch (IOException e) {
-            throw new BadFileGroupDAOException(MESSAGE_CANT_WRITE, e);
-        }
-    }
-
     @Override
     public boolean addClient(Client client) throws BadFileGroupDAOException {
         if (client != null && !clientsCache.contains(client)) {
@@ -57,6 +38,22 @@ public class GroupDAOImpl implements GroupDAO {
             return true;
         }
         return false;
+    }
+
+    private void download() throws BadFileGroupDAOException {
+        try {
+            clientsCache.addAll(source.read());
+        } catch (IOException e) {
+            throw new BadFileGroupDAOException(MESSAGE_CANT_READ, e);
+        }
+    }
+
+    private void upload() throws BadFileGroupDAOException {
+        try {
+            source.write(clientsCache);
+        } catch (IOException e) {
+            throw new BadFileGroupDAOException(MESSAGE_CANT_WRITE, e);
+        }
     }
 
 }

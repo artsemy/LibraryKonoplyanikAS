@@ -1,6 +1,6 @@
 package by.training.epam.bean;
 
-public class Book {
+public class Book implements Comparable{
 
     private String title;
     private String author;
@@ -73,6 +73,12 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Book book = (Book) o;
+        return Integer.compare(id, book.id);
     }
 
 }
