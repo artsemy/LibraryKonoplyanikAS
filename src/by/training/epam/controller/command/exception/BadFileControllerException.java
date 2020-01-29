@@ -1,6 +1,6 @@
 package by.training.epam.controller.command.exception;
 
-public class BadFileControllerException extends Exception{
+public class BadFileControllerException extends ControllerException{
 
     public BadFileControllerException(String message) {
         super(message);

@@ -1,6 +1,6 @@
 package by.training.epam.service.exception;
 
-public class BadFileBookServiceException extends Exception{
+public class BadFileBookServiceException extends ServiceException{
 
     public BadFileBookServiceException(String message) {
         super(message);

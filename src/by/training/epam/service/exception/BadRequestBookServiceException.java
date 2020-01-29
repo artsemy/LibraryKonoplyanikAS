@@ -1,6 +1,6 @@
 package by.training.epam.service.exception;
 
-public class BadRequestBookServiceException extends Exception{
+public class BadRequestBookServiceException extends ServiceException{
 
     public BadRequestBookServiceException(String message) {
         super(message);

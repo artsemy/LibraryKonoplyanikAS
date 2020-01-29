@@ -1,6 +1,6 @@
 package by.training.epam.dao.exception;
 
-public class BadFileLibraryDAOException extends Exception{
+public class BadFileLibraryDAOException extends DAOException{
 
     public BadFileLibraryDAOException(String message) {
         super(message);

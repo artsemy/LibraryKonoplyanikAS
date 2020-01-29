@@ -30,7 +30,7 @@ public class ClientSourceImpl implements ClientSource {
         Set<Client> clientCache = new TreeSet<>();
         String line;
         while ( (line = reader.readLine()) != null) {
-            Client client = validateClient(line);
+            Client client = parseClient(line);
             if (client != null) {
                 clientCache.add(client);
             }
@@ -48,7 +48,7 @@ public class ClientSourceImpl implements ClientSource {
         writer.close();
     }
 
-    private Client validateClient(String line) {
+    private Client parseClient(String line) {
         if (line == null || line.equals(EMPTY_STRING)) {
             return null;
         }

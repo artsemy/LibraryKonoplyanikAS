@@ -7,6 +7,7 @@ import by.training.epam.service.ClientService;
 import by.training.epam.service.exception.BadFileGroupServiceException;
 import by.training.epam.service.exception.BadRequestGroupServiceException;
 import by.training.epam.dao.impl.GroupDAOImpl;
+import by.training.epam.service.exception.ServiceException;
 
 import static by.training.epam.data.Constant.*;
 
@@ -36,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String registration(String request) throws BadFileGroupServiceException, BadRequestGroupServiceException {
+    public String registration(String request) throws ServiceException {
         Client client = validateClient(request); //clientRole
         boolean success;
         try {
@@ -48,7 +49,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String signIn(String request) throws BadRequestGroupServiceException {
+    public String signIn(String request) throws ServiceException {
         Client client = validateClient(request.trim());
         boolean success = groupDAO.signIn(client);
         return success ? SIGN_IN_OK : SIGN_IN_NOT_OK;

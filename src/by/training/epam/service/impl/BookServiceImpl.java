@@ -9,6 +9,7 @@ import by.training.epam.service.BookService;
 import by.training.epam.service.exception.BadFileBookServiceException;
 import by.training.epam.service.exception.BadRequestBookServiceException;
 import by.training.epam.dao.impl.LibraryDAOImpl;
+import by.training.epam.service.exception.ServiceException;
 
 import java.util.Collection;
 
@@ -42,7 +43,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String create(String sBook) throws BadFileBookServiceException, BadRequestBookServiceException {
+    public String create(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
             Book book = validateBook(sBook.trim());
@@ -56,7 +57,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String delete(String sId) throws BadFileBookServiceException, BadRequestBookServiceException {
+    public String delete(String sId) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
             int id = validateId(sId.trim());
@@ -70,7 +71,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String update(String sBook) throws BadFileBookServiceException, BadRequestBookServiceException {
+    public String update(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
             Book book = validateBookUpdate(sBook.trim());
@@ -84,7 +85,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String read(String sBook) throws BadRequestBookServiceException {
+    public String read(String sBook) throws ServiceException {
         Book book = validateBookFind(sBook);
         Collection<Book> lib;
         lib = libraryDAO.read(book);
