@@ -1,9 +1,9 @@
-Anna Karenina by Leo Tolstoy
-Madame Bovary by Gustave Flaubert
-War and Peace by Leo Tolstoy
-The Great Gatsby by F. Scott Fitzgerald
-Lolita by Vladimir Nabokov
-Middlemarch by George Eliot
-The Adventures of Huckleberry Finn by Mark Twain
-The Stories of Anton Chekhov by Anton Chekhov
-newB1 by A1
+Anna Karenina \by Leo Tolstoy \by 0
+Madame Bovary \by Gustave Flaubert \by 1
+War and Peace \by Leo Tolstoy \by 2
+The Great Gatsby \by F. Scott Fitzgerald \by 3
+Lolita \by Vladimir Nabokov \by 4
+Middlemarch \by George Eliot \by 5
+The Adventures of Huckleberry Finn \by Mark Twain \by 6
+The Stories of Anton Chekhov \by Anton Chekhov \by 7
+newB1 \by A1 \by 10

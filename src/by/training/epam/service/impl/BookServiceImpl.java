@@ -87,8 +87,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public String read(String sBook) throws ServiceException {
         Book book = validateBookFind(sBook);
-        Collection<Book> lib;
-        lib = libraryDAO.read(book);
+        Collection<Book> lib = libraryDAO.read(book);
         StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
         for (Book b: lib) {
             res.append(b.getTitle()).append(DIVIDER_BOOK_LINE).append(b.getAuthor()).append(DIVIDER_LINE).append(b.getId()).append(END_LINE);

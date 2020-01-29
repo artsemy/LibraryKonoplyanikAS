@@ -53,8 +53,7 @@ public class BookSourceImpl implements BookSource {
             return null;
         }
         String[] array = line.split(DIVIDER_BOOK_LINE);
-        String[] array2 = array[1].split(DIVIDER_LINE);
-        return new Book(array[0], array2[0], Integer.parseInt(array2[1]));
+        return new Book(array[0], array[1], Integer.parseInt(array[2]));
     }
 
 }
