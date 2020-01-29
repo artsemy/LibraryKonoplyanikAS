@@ -11,9 +11,12 @@ public enum CommandName {
     EXIT;
 
     public static CommandName parse(String command) {
+        if (command == null) {
+            return null;
+        }
         CommandName[] array = CommandName.values();
         for (CommandName name: array) {
-            if (name.toString().equals(command.toUpperCase())) {
+            if (command.equalsIgnoreCase(name.name())) {
                 return name;
             }
         }
