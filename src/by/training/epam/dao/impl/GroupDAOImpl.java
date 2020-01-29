@@ -31,13 +31,18 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    public boolean addClient(Client client) throws BadFileGroupDAOException {
+    public boolean registration(Client client) throws BadFileGroupDAOException {
         if (client != null && !clientsCache.contains(client)) {
             clientsCache.add(client);
             upload();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean signIn(Client client) {
+        return clientsCache.contains(client);
     }
 
     private void download() throws BadFileGroupDAOException {

@@ -11,7 +11,7 @@ public class FindBook implements Command {
     @Override
     public String execute(String request) throws BadFileBookServiceException, BadRequestBookServiceException {
         String response;
-        BookService bookService = new BookServiceImpl();
+        BookService bookService = BookServiceImpl.getInstance();
         response = bookService.read(request);
         return response;
     }

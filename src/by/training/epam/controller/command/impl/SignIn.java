@@ -10,7 +10,7 @@ public class SignIn implements Command {
     @Override
     public String execute(String request) throws BadFileGroupServiceException, BadRequestGroupServiceException {
         String res;
-        ClientServiceImpl clientService = new ClientServiceImpl();
+        ClientServiceImpl clientService = ClientServiceImpl.getInstance();
         res =  clientService.signIn(request);
         return res;
     }

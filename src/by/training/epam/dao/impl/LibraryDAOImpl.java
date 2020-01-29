@@ -14,7 +14,7 @@ import static by.training.epam.data.Constant.*;
 public class LibraryDAOImpl implements LibraryDAO {
 
     private static LibraryDAOImpl instance;
-    private static BookSource source;
+    private BookSource source;
     private static final Map<Integer, Book> booksCache = new TreeMap<>();
     private static final int MAX_ID = 100;
 
@@ -112,7 +112,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         return id;
     }
 
-    private static void download() throws BadFileLibraryDAOException {
+    private void download() throws BadFileLibraryDAOException {
         try {
             booksCache.putAll(source.read());
         } catch (IOException e) {
@@ -120,7 +120,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         }
     }
 
-    private static void upload() throws BadFileLibraryDAOException {
+    private void upload() throws BadFileLibraryDAOException {
         try {
             source.write(booksCache.values());
         } catch (IOException e) {

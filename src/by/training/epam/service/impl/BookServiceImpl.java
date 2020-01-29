@@ -1,6 +1,7 @@
 package by.training.epam.service.impl;
 
 import by.training.epam.bean.Book;
+import by.training.epam.dao.LibraryDAO;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
 import by.training.epam.data.ClientRole;
 import by.training.epam.data.ClientRoleHolder;
@@ -15,6 +16,9 @@ import static by.training.epam.data.Constant.*;
 
 public class BookServiceImpl implements BookService {
 
+    private static BookServiceImpl instance;
+    private LibraryDAO libraryDAO;
+
     private final static String ADDED = "added";
     private final static String DELETED = "deleted";
     private final static String CHANGED = "changed";
@@ -22,7 +26,19 @@ public class BookServiceImpl implements BookService {
     private final static String SUCCESS = "book ";
     private final static String NOT_SUCCESS = "error, book not ";
 
-    public BookServiceImpl() {
+    private BookServiceImpl() throws BadFileBookServiceException {
+        try {
+            libraryDAO = LibraryDAOImpl.getInstance();
+        } catch (BadFileLibraryDAOException e) {
+            throw new BadFileBookServiceException(e.getMessage(), e);
+        }
+    }
+
+    public static synchronized BookServiceImpl getInstance() throws BadFileBookServiceException {
+        if (instance == null) {
+            instance = new BookServiceImpl();
+        }
+        return instance;
     }
 
     @Override
@@ -31,7 +47,7 @@ public class BookServiceImpl implements BookService {
         if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
             Book book = validateBook(sBook.trim());
             try {
-                needUpdate = LibraryDAOImpl.getInstance().create(book);
+                needUpdate = libraryDAO.create(book);
             } catch (BadFileLibraryDAOException e) {
                 throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
             }
@@ -45,7 +61,7 @@ public class BookServiceImpl implements BookService {
         if (checkRole(ClientRole.ADMIN)) {
             int id = validateId(sId.trim());
             try {
-                needUpdate = LibraryDAOImpl.getInstance().delete(id);
+                needUpdate = libraryDAO.delete(id);
             } catch (BadFileLibraryDAOException e) {
                 throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
             }
@@ -59,7 +75,7 @@ public class BookServiceImpl implements BookService {
         if (checkRole(ClientRole.ADMIN)) {
             Book book = validateBookUpdate(sBook.trim());
             try {
-                needUpdate = LibraryDAOImpl.getInstance().update(book);
+                needUpdate = libraryDAO.update(book);
             } catch (BadFileLibraryDAOException e) {
                 throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
             }
@@ -68,15 +84,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String read(String sBook) throws BadRequestBookServiceException, BadFileBookServiceException {
+    public String read(String sBook) throws BadRequestBookServiceException {
         Book book = validateBookFind(sBook);
         Collection<Book> lib;
-        try {
-            LibraryDAOImpl.getInstance().read(book);
-            lib = LibraryDAOImpl.getInstance().getBookMap().values();
-        } catch (BadFileLibraryDAOException e) {
-            throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
-        }
+        lib = libraryDAO.read(book);
         StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
         for (Book b: lib) {
             res.append(b.getTitle()).append(DIVIDER_BOOK_LINE).append(b.getAuthor()).append(DIVIDER_LINE).append(b.getId()).append(END_LINE);

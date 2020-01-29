@@ -11,7 +11,7 @@ public class Registration implements Command {
     @Override
     public String execute(String request) throws BadFileGroupServiceException, BadRequestGroupServiceException {
         String res;
-        ClientService clientService = new ClientServiceImpl();
+        ClientService clientService = ClientServiceImpl.getInstance();
         res = clientService.registration(request);
         return res;
     }
