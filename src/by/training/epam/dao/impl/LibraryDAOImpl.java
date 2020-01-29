@@ -54,6 +54,9 @@ public class LibraryDAOImpl implements LibraryDAO {
 
     @Override
     public boolean update(Book book) throws BadFileLibraryDAOException {
+        if (book == null) {
+            return false;
+        }
         if (booksCache.containsKey(book.getId())) {
             booksCache.replace(book.getId(), book);
             upload();

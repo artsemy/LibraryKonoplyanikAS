@@ -5,11 +5,9 @@ import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
 import by.training.epam.service.ClientService;
 import by.training.epam.service.exception.BadFileGroupServiceException;
-import by.training.epam.service.exception.BadRequestGroupServiceException;
 import by.training.epam.dao.impl.GroupDAOImpl;
 import by.training.epam.service.exception.ServiceException;
-
-import static by.training.epam.data.Constant.*;
+import by.training.epam.service.validator.ClientValidator;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -38,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public String registration(String request) throws ServiceException {
-        Client client = validateClient(request); //clientRole
+        Client client = ClientValidator.validateClient(request);
         boolean success;
         try {
             success = groupDAO.registration(client);
@@ -49,23 +47,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String signIn(String request) throws ServiceException {
-        Client client = validateClient(request.trim());
+    public String signIn(String request) {
+        Client client = ClientValidator.validateClient(request.trim());
         boolean success = groupDAO.signIn(client);
         return success ? SIGN_IN_OK : SIGN_IN_NOT_OK;
-    }
-
-    private Client validateClient(String request) throws BadRequestGroupServiceException {
-        if (request == null) {
-            throw new BadRequestGroupServiceException(MESSAGE_CANT_VALIDATE_REQUEST);
-        }
-        Client client = new Client();
-        String[] array = request.split(DIVIDER_LINE);
-        client.setLogin(array[0]);
-        if (array.length > 1) {
-            client.setPassword(array[1]);
-        }
-        return client;
     }
 
 }
