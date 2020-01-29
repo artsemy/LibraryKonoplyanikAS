@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
     public String create(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
-            Book book = BookValidator.validateCreate(sBook.trim());
+            Book book = BookValidator.validateCreate(sBook);
             try {
                 needUpdate = libraryDAO.create(book);
             } catch (BadFileLibraryDAOException e) {
@@ -60,7 +60,7 @@ public class BookServiceImpl implements BookService {
     public String delete(String sId) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            int id = BookValidator.validateDelete(sId.trim());
+            int id = BookValidator.validateDelete(sId);
             try {
                 needUpdate = libraryDAO.delete(id);
             } catch (BadFileLibraryDAOException e) {
@@ -74,7 +74,7 @@ public class BookServiceImpl implements BookService {
     public String update(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            Book book = BookValidator.validateUpdate(sBook.trim());
+            Book book = BookValidator.validateUpdate(sBook);
             try {
                 needUpdate = libraryDAO.update(book);
             } catch (BadFileLibraryDAOException e) {
@@ -86,7 +86,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String read(String sBook) {
-        Book book = BookValidator.validateRead(sBook.trim());
+        Book book = BookValidator.validateRead(sBook);
         Collection<Book> lib = libraryDAO.read(book);
         StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
         for (Book b: lib) {

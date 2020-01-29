@@ -4,8 +4,8 @@ import by.training.epam.service.exception.ServiceException;
 
 public interface ClientService {
 
-    public String registration(String request) throws ServiceException;
+    String registration(String request) throws ServiceException;
 
-    public String signIn(String request) throws ServiceException;
+    String signIn(String request) throws ServiceException;
 
 }

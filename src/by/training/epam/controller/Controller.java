@@ -2,8 +2,6 @@ package by.training.epam.controller;
 
 import by.training.epam.controller.command.Command;
 import by.training.epam.controller.command.CommandProvider;
-import by.training.epam.controller.command.exception.BadFileControllerException;
-import by.training.epam.controller.command.exception.BadRequestControllerException;
 import by.training.epam.controller.command.exception.ControllerException;
 import by.training.epam.service.exception.*;
 
@@ -19,10 +17,6 @@ public class Controller {
         String response;
         try {
             response = command.execute(requestSplit.actualRequest);
-        } catch (BadFileBookServiceException | BadFileGroupServiceException e) {
-            throw new BadFileControllerException(e.getMessage(), e);
-        } catch (BadRequestBookServiceException | BadRequestGroupServiceException e) {
-            throw new BadRequestControllerException(e.getMessage(), e);
         } catch (ServiceException e) {
             throw new ControllerException(e.getMessage(), e);
         }
@@ -35,9 +29,14 @@ public class Controller {
         private String actualRequest;
 
         RequestSplit(String str) {
-            String[] array = str.split(DIVIDER_LINE);
-            commandName = array[0];
-            actualRequest = str.replace(commandName, EMPTY_STRING); //.trim
+            if (str == null) {
+                commandName = null;
+                actualRequest = null;
+            } else {
+                String[] array = str.split(DIVIDER_LINE);
+                commandName = array[0];
+                actualRequest = str.replace(commandName, EMPTY_STRING).trim();
+            }
         }
     }
 

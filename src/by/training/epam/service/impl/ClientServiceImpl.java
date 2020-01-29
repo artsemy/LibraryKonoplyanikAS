@@ -48,7 +48,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public String signIn(String request) {
-        Client client = ClientValidator.validateClient(request.trim());
+        Client client = ClientValidator.validateClient(request);
         boolean success = groupDAO.signIn(client);
         return success ? SIGN_IN_OK : SIGN_IN_NOT_OK;
     }
