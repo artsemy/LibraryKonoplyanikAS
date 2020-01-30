@@ -4,7 +4,7 @@ import by.training.epam.bean.Book;
 import by.training.epam.dao.LibraryDAO;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
 import by.training.epam.data.ClientRole;
-import by.training.epam.data.ClientRoleHolder;
+import by.training.epam.data.CurrentClientHolder;
 import by.training.epam.service.BookService;
 import by.training.epam.service.exception.BadFileBookServiceException;
 import by.training.epam.dao.impl.LibraryDAOImpl;
@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private boolean checkRole(ClientRole ... roles) {
-        ClientRole clientRole = ClientRoleHolder.getRole();
+        ClientRole clientRole = CurrentClientHolder.getRole();
         for (ClientRole r: roles) {
             if (clientRole.equals(r)) {
                 return true;
