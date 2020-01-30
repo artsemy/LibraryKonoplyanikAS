@@ -9,12 +9,13 @@ public class FindBook implements Command {
 
     private BookService bookService;
 
+    public FindBook() throws ServiceException {
+        bookService = BookServiceImpl.getInstance();
+    }
+
     @Override
     public String execute(String request) throws ServiceException {
-        String response;
-        bookService = BookServiceImpl.getInstance();
-        response = bookService.read(request);
-        return response;
+        return bookService.read(request);
     }
 
 }

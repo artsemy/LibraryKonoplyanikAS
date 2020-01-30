@@ -9,12 +9,13 @@ public class Registration implements Command {
 
     private ClientService clientService;
 
+    public Registration() throws ServiceException {
+        clientService = ClientServiceImpl.getInstance();
+    }
+
     @Override
     public String execute(String request) throws ServiceException {
-        String res;
-        clientService = ClientServiceImpl.getInstance();
-        res = clientService.registration(request);
-        return res;
+        return clientService.registration(request);
     }
 
 }

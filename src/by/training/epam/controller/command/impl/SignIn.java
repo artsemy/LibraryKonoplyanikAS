@@ -9,12 +9,13 @@ public class SignIn implements Command {
 
     private ClientService clientService;
 
+    public SignIn() throws ServiceException {
+        clientService = ClientServiceImpl.getInstance();
+    }
+
     @Override
     public String execute(String request) throws ServiceException {
-        String res;
-        clientService = ClientServiceImpl.getInstance();
-        res =  clientService.signIn(request);
-        return res;
+        return clientService.signIn(request);
     }
 
 }
