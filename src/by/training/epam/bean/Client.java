@@ -8,14 +8,6 @@ public class Client implements Comparable{
     private String password;
     private ClientRole clientRole;
 
-    private static final String DEFAULT_VALUE = "";
-
-    public Client() {
-        login = DEFAULT_VALUE;
-        password = DEFAULT_VALUE;
-        clientRole = ClientRole.NO_ONE;
-    }
-
     public Client(String login, String password, ClientRole role) {
         setLogin(login);
         setPassword(password);
@@ -51,7 +43,7 @@ public class Client implements Comparable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return login.equals(client.login) && password.equals(client.password); //role!!!
+        return login.equals(client.login) && password.equals(client.password) && clientRole.equals(client.clientRole);
     }
 
     @Override

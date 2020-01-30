@@ -6,18 +6,6 @@ public class Book implements Comparable{
     private String author;
     private int id;
 
-//    private static final String DEFAULT_VALUE = "";
-//
-//    public Book() {
-//        title = DEFAULT_VALUE;
-//        author = DEFAULT_VALUE;
-//    }
-
-    public Book(String title, String author) {
-        setTitle(title);
-        setAuthor(author);
-    }
-
     public Book(String title, String author, int id) {
         setTitle(title);
         setAuthor(author);
@@ -53,7 +41,7 @@ public class Book implements Comparable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return title.equals(book.title) && author.equals(book.author); //no third param
+        return title.equals(book.title) && author.equals(book.author) && id == book.id;
     }
 
     @Override
