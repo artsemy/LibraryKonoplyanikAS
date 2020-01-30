@@ -3,6 +3,8 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Book;
 import by.training.epam.dao.LibraryDAO;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
+import by.training.epam.data.ClientRole;
+import by.training.epam.data.CurrentClientHolder;
 import by.training.epam.source.BookSource;
 import by.training.epam.source.impl.BookSourceImpl;
 
@@ -78,6 +80,11 @@ public class LibraryDAOImpl implements LibraryDAO {
             }
         }
         return found;
+    }
+
+    @Override
+    public ClientRole getRole() {
+        return CurrentClientHolder.getRole();
     }
 
     private Collection<Book> findLibByTitle(String title) {

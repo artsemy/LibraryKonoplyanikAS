@@ -3,6 +3,7 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Client;
 import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
+import by.training.epam.data.CurrentClientHolder;
 import by.training.epam.source.ClientSource;
 import by.training.epam.source.impl.ClientSourceImpl;
 
@@ -34,6 +35,7 @@ public class GroupDAOImpl implements GroupDAO {
         if (client != null && !clientsCache.contains(client)) {
             clientsCache.add(client);
             upload();
+            setCurrentClient(client);
             return true;
         }
         return false;
@@ -44,10 +46,15 @@ public class GroupDAOImpl implements GroupDAO {
         if (clientsCache.contains(client)) {
             Client c = clientsCache.ceiling(client);
             if (c != null) {
+                setCurrentClient(c);
                 return c.getPassword().equals(client.getPassword());
             }
         }
         return false;
+    }
+
+    private void setCurrentClient(Client client) {
+        CurrentClientHolder.setClient(client);
     }
 
     private void download() throws BadFileGroupDAOException {
