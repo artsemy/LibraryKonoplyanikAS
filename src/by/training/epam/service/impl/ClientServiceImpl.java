@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String registration(String request) throws ServiceException {
+    public String register(String request) throws ServiceException {
         Client client = clientValidator.validateClient(request);
         boolean success;
         try {

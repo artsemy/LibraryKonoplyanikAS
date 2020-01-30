@@ -15,7 +15,7 @@ public class Registration implements Command {
 
     @Override
     public String execute(String request) throws ServiceException {
-        return clientService.registration(request);
+        return clientService.register(request);
     }
 
 }
