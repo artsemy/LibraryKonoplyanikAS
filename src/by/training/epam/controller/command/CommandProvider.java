@@ -2,6 +2,7 @@ package by.training.epam.controller.command;
 
 import by.training.epam.data.CommandName;
 import by.training.epam.controller.command.impl.*;
+import by.training.epam.service.exception.ServiceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ public final class CommandProvider {
 
     private static final Map<CommandName, Command> commands = new HashMap<>();
 
-    public CommandProvider() {
+    public CommandProvider() throws ServiceException {
         commands.put(CommandName.SIGN_IN, new SignIn());
         commands.put(CommandName.LOG_IN, new Registration());
         commands.put(CommandName.ADD_BOOK, new AddBook());

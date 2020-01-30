@@ -12,10 +12,10 @@ public class Controller {
 
     public String start(String request) throws ControllerException {
         RequestSplit requestSplit = new RequestSplit(request);
-        CommandProvider provider = new CommandProvider();
-        Command command = provider.getCommand(requestSplit.commandName);
         String response;
         try {
+            CommandProvider provider = new CommandProvider();
+            Command command = provider.getCommand(requestSplit.commandName);
             response = command.execute(requestSplit.actualRequest);
         } catch (ServiceException e) {
             throw new ControllerException(e.getMessage(), e);

@@ -7,7 +7,6 @@ import by.training.epam.source.ClientSource;
 import by.training.epam.source.impl.ClientSourceImpl;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.TreeSet;
 
 import static by.training.epam.data.Constant.*;
@@ -16,7 +15,7 @@ public class GroupDAOImpl implements GroupDAO {
 
     private static GroupDAOImpl singleton;
     private static ClientSource source;
-    private static final Set<Client> clientsCache = new TreeSet<>();
+    private static final TreeSet<Client> clientsCache = new TreeSet<>();
 
     private GroupDAOImpl() throws BadFileGroupDAOException {
         source = ClientSourceImpl.getInstance();
@@ -42,7 +41,13 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public boolean signIn(Client client) {
-        return clientsCache.contains(client);
+        if (clientsCache.contains(client)) {
+            Client c = clientsCache.ceiling(client);
+            if (c != null) {
+                return c.getPassword().equals(client.getPassword());
+            }
+        }
+        return false;
     }
 
     private void download() throws BadFileGroupDAOException {
