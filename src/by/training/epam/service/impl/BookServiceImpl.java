@@ -10,6 +10,7 @@ import by.training.epam.service.exception.BadFileBookServiceException;
 import by.training.epam.dao.impl.LibraryDAOImpl;
 import by.training.epam.service.exception.ServiceException;
 import by.training.epam.service.validator.BookValidator;
+import by.training.epam.service.validator.impl.BookValidatorImpl;
 
 import java.util.Collection;
 
@@ -19,6 +20,7 @@ public class BookServiceImpl implements BookService {
 
     private static BookServiceImpl instance;
     private LibraryDAO libraryDAO;
+    private BookValidator bookValidator;
 
     private final static String ADDED = "added";
     private final static String DELETED = "deleted";
@@ -30,6 +32,7 @@ public class BookServiceImpl implements BookService {
     private BookServiceImpl() throws BadFileBookServiceException {
         try {
             libraryDAO = LibraryDAOImpl.getInstance();
+            bookValidator = BookValidatorImpl.getInstance();
         } catch (BadFileLibraryDAOException e) {
             throw new BadFileBookServiceException(e.getMessage(), e);
         }
@@ -46,7 +49,7 @@ public class BookServiceImpl implements BookService {
     public String create(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
-            Book book = BookValidator.validateCreate(sBook);
+            Book book = bookValidator.validateCreate(sBook);
             try {
                 needUpdate = libraryDAO.create(book);
             } catch (BadFileLibraryDAOException e) {
@@ -60,7 +63,7 @@ public class BookServiceImpl implements BookService {
     public String delete(String sId) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            int id = BookValidator.validateDelete(sId);
+            int id = bookValidator.validateDelete(sId);
             try {
                 needUpdate = libraryDAO.delete(id);
             } catch (BadFileLibraryDAOException e) {
@@ -74,7 +77,7 @@ public class BookServiceImpl implements BookService {
     public String update(String sBook) throws ServiceException {
         boolean needUpdate = false;
         if (checkRole(ClientRole.ADMIN)) {
-            Book book = BookValidator.validateUpdate(sBook);
+            Book book = bookValidator.validateUpdate(sBook);
             try {
                 needUpdate = libraryDAO.update(book);
             } catch (BadFileLibraryDAOException e) {
@@ -86,7 +89,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String read(String sBook) {
-        Book book = BookValidator.validateRead(sBook);
+        Book book = bookValidator.validateRead(sBook);
         Collection<Book> lib = libraryDAO.read(book);
         StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
         for (Book b: lib) {
