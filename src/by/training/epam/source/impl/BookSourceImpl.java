@@ -42,8 +42,8 @@ public class BookSourceImpl implements BookSource {
     public void write(Collection<Book> books) throws IOException {
         FileWriter writer = new FileWriter(PATH_TO_BOOK_FILE, false);
         for (Book book: books) {
-            String str = book.getTitle() + DIVIDER_BOOK_LINE + book.getAuthor() + END_LINE + book.getId();
-            writer.write(str);
+            String str = String.join(DIVIDER_BOOK_LINE, book.getTitle(), book.getAuthor(), String.valueOf(book.getId()));
+            writer.write(str + END_LINE);
         }
         writer.close();
     }

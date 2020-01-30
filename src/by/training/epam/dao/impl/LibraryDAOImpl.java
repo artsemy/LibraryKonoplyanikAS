@@ -120,7 +120,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         int id;
         do {
             id = random.nextInt(MAX_ID);
-        } while (!booksCache.containsKey(id));
+        } while (booksCache.containsKey(id));
         return id;
     }
 

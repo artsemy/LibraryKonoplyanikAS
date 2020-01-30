@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService {
         Client client = clientValidator.validateClient(request);
         boolean success;
         try {
-            success = groupDAO.registration(client);
+            success = groupDAO.register(client);
         } catch (BadFileGroupDAOException e) {
             throw new BadFileGroupServiceException(e.getMessage(), e);
         }

@@ -3,6 +3,7 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Client;
 import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
+import by.training.epam.data.ClientRole;
 import by.training.epam.data.CurrentClientHolder;
 import by.training.epam.source.ClientSource;
 import by.training.epam.source.impl.ClientSourceImpl;
@@ -31,8 +32,9 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    public boolean registration(Client client) throws BadFileGroupDAOException {
+    public boolean register(Client client) throws BadFileGroupDAOException {
         if (client != null && !clientsCache.contains(client)) {
+            client.setClientRole(ClientRole.USER); //here?
             clientsCache.add(client);
             upload();
             setCurrentClient(client);

@@ -24,13 +24,14 @@ public class BookValidatorImpl implements BookValidator {
         if (emptyCheck(sBook)) {
             return new Book(EMPTY_STRING, EMPTY_STRING, ID);
         }
+        sBook = " " + sBook; //bad
         String[] array = sBook.split(DIVIDER_BOOK_LINE);
         String title = array[0];
         String author = EMPTY_STRING;
         if (array.length == 2) {
             author = array[1];
         }
-        return new Book(title, author, ID);
+        return new Book(title.trim(), author, ID);
     }
 
     @Override
