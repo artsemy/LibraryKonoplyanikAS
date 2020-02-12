@@ -10,4 +10,11 @@ public class BadFileLibraryDAOException extends DAOException{
         super(message, cause);
     }
 
+    public BadFileLibraryDAOException() {
+        super();
+    }
+
+    public BadFileLibraryDAOException(Throwable cause) {
+        super(cause);
+    }
 }

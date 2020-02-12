@@ -10,4 +10,11 @@ public class BadRequestBookServiceException extends ServiceException{
         super(message, cause);
     }
 
+    public BadRequestBookServiceException() {
+        super();
+    }
+
+    public BadRequestBookServiceException(Throwable cause) {
+        super(cause);
+    }
 }

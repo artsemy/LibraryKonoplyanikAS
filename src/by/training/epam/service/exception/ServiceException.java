@@ -10,4 +10,11 @@ public class ServiceException extends Exception {
         super(message, cause);
     }
 
+    public ServiceException() {
+        super();
+    }
+
+    public ServiceException(Throwable cause) {
+        super(cause);
+    }
 }

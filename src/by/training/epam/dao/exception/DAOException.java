@@ -10,4 +10,11 @@ public class DAOException extends Exception {
         super(message, cause);
     }
 
+    public DAOException() {
+        super();
+    }
+
+    public DAOException(Throwable cause) {
+        super(cause);
+    }
 }

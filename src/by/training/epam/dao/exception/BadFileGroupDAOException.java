@@ -10,4 +10,11 @@ public class BadFileGroupDAOException extends DAOException{
         super(message, cause);
     }
 
+    public BadFileGroupDAOException() {
+        super();
+    }
+
+    public BadFileGroupDAOException(Throwable cause) {
+        super(cause);
+    }
 }

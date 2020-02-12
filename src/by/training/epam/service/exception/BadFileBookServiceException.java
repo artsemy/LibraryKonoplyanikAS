@@ -10,4 +10,11 @@ public class BadFileBookServiceException extends ServiceException{
         super(message, cause);
     }
 
+    public BadFileBookServiceException() {
+        super();
+    }
+
+    public BadFileBookServiceException(Throwable cause) {
+        super(cause);
+    }
 }

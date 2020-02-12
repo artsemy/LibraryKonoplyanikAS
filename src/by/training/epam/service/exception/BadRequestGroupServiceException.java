@@ -10,4 +10,11 @@ public class BadRequestGroupServiceException extends ServiceException{
         super(message, cause);
     }
 
+    public BadRequestGroupServiceException() {
+        super();
+    }
+
+    public BadRequestGroupServiceException(Throwable cause) {
+        super(cause);
+    }
 }

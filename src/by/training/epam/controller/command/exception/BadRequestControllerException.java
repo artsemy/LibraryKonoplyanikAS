@@ -10,4 +10,11 @@ public class BadRequestControllerException extends ControllerException {
         super(message, cause);
     }
 
+    public BadRequestControllerException() {
+        super();
+    }
+
+    public BadRequestControllerException(Throwable cause) {
+        super(cause);
+    }
 }

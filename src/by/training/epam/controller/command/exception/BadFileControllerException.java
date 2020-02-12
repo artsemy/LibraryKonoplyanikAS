@@ -10,4 +10,11 @@ public class BadFileControllerException extends ControllerException{
         super(message, cause);
     }
 
+    public BadFileControllerException() {
+        super();
+    }
+
+    public BadFileControllerException(Throwable cause) {
+        super(cause);
+    }
 }

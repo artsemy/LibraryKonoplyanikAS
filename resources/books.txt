@@ -5,4 +5,3 @@ Lolita -by Vladimir Nabokov -by 4
 Middlemarch -by George Eliot -by 5
 The Adventures of Huckleberry Finn -by Mark Twain -by 6
 The Stories of Anton Chekhov -by Anton Chekhov -by 7
-newB2 -by A1 -by 10

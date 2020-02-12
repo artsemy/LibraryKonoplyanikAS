@@ -10,4 +10,11 @@ public class BadFileGroupServiceException extends ServiceException {
         super(message, cause);
     }
 
+    public BadFileGroupServiceException() {
+        super();
+    }
+
+    public BadFileGroupServiceException(Throwable cause) {
+        super(cause);
+    }
 }

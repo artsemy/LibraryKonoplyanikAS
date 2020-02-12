@@ -10,4 +10,11 @@ public class ControllerException extends Exception {
         super(message, cause);
     }
 
+    public ControllerException() {
+        super();
+    }
+
+    public ControllerException(Throwable cause) {
+        super(cause);
+    }
 }
