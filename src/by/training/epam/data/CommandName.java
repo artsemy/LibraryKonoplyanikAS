@@ -14,7 +14,8 @@ public enum CommandName {
         if (command == null) {
             return null;// вы уже знаете основу работу с исключениями, зачем такой перефин ушами
         }
-        CommandName[] array = CommandName.values();
+        CommandName[] array = CommandName.values();// выучи методы java.lang.Enum, чтобы не изобретать велосипед
+        // valueof тебе бы помог
         for (CommandName name: array) {
             if (command.equalsIgnoreCase(name.name())) {
                 return name;
