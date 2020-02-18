@@ -12,7 +12,7 @@ public enum CommandName {
 
     public static CommandName parse(String command) {
         if (command == null) {
-            return null;
+            return null;// вы уже знаете основу работу с исключениями, зачем такой перефин ушами
         }
         CommandName[] array = CommandName.values();
         for (CommandName name: array) {
@@ -20,7 +20,7 @@ public enum CommandName {
                 return name;
             }
         }
-        return null;
+        return null;// здесь лучше сделать страходку и null не возвращать, вернуть команду по умолчанию, или что-то в этом роде
     }
 
 }
