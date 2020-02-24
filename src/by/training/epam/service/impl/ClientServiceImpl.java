@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
             groupDAO = GroupDAOImpl.getInstance();
             clientValidator = ClientValidatorImpl.getInstance();
         } catch (BadFileGroupDAOException e) {
-            throw new BadFileGroupServiceException(e.getMessage(), e);
+            throw new BadFileGroupServiceException(e);
         }
     }
 
@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             success = groupDAO.register(client);
         } catch (BadFileGroupDAOException e) {
-            throw new BadFileGroupServiceException(e.getMessage(), e);
+            throw new BadFileGroupServiceException(e);
         }
         return success ? REGISTRATION_OK : REGISTRATION_NOT_OK;
     }

@@ -2,6 +2,8 @@ package by.training.epam.controller.command.exception;
 
 public class BadFileControllerException extends ControllerException{
 
+    private static final long serialVersionUID = 1L;
+
     public BadFileControllerException(String message) {
         super(message);
     }

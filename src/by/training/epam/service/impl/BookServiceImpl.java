@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
             libraryDAO = LibraryDAOImpl.getInstance();
             bookValidator = BookValidatorImpl.getInstance();
         } catch (BadFileLibraryDAOException e) {
-            throw new BadFileBookServiceException(e.getMessage(), e);// обсуждали этот кейс, зачем дублируешь сообщения?
+            throw new BadFileBookServiceException(e);
         }
     }
 
@@ -52,7 +52,7 @@ public class BookServiceImpl implements BookService {
             try {
                 needUpdate = libraryDAO.create(book);
             } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);// и здесь говорили, что тут как раз используется строчка в своем первозданном виде
+                throw new BadFileBookServiceException(e);
             
             }
         }
@@ -67,7 +67,7 @@ public class BookServiceImpl implements BookService {
             try {
                 needUpdate = libraryDAO.delete(id);
             } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
+                throw new BadFileBookServiceException(e);
             }
         }
         return result(DELETED, needUpdate);
@@ -81,7 +81,7 @@ public class BookServiceImpl implements BookService {
             try {
                 needUpdate = libraryDAO.update(book);
             } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
+                throw new BadFileBookServiceException(e);
             }
         }
         return result(CHANGED, needUpdate);

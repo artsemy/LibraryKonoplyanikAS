@@ -2,6 +2,8 @@ package by.training.epam.service.exception;
 
 public class BadRequestBookServiceException extends ServiceException{
 
+    private static final long serialVersionUID = 1L;
+
     public BadRequestBookServiceException(String message) {
         super(message);
     }

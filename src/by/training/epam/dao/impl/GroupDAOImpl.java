@@ -11,8 +11,6 @@ import by.training.epam.source.impl.ClientSourceImpl;
 import java.io.IOException;
 import java.util.TreeSet;
 
-import static by.training.epam.data.Constant.*;
-
 public class GroupDAOImpl implements GroupDAO {
     // мы на занятии обсуждали, почему в этой реализации нужно уходить от синглтона и от экземпляров полей классов
     // и что я вижу проверяя?
@@ -65,7 +63,7 @@ public class GroupDAOImpl implements GroupDAO {
         try {
             clientsCache.addAll(source.read());
         } catch (IOException e) {
-            throw new BadFileGroupDAOException(MESSAGE_CANT_READ, e);
+            throw new BadFileGroupDAOException("can't read file", e);
         }
     }
 
@@ -73,7 +71,7 @@ public class GroupDAOImpl implements GroupDAO {
         try {
             source.write(clientsCache);
         } catch (IOException e) {
-            throw new BadFileGroupDAOException(MESSAGE_CANT_WRITE, e);
+            throw new BadFileGroupDAOException("can't write file", e);
         }
     }
 

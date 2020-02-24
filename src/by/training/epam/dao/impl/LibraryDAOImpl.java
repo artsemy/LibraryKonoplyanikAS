@@ -128,7 +128,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         try {
             booksCache.putAll(source.read());
         } catch (IOException e) {
-            throw new BadFileLibraryDAOException(MESSAGE_CANT_READ, e);
+            throw new BadFileLibraryDAOException("can't read file", e);
         }
     }
 
@@ -136,7 +136,7 @@ public class LibraryDAOImpl implements LibraryDAO {
         try {
             source.write(booksCache.values());
         } catch (IOException e) {
-            throw new BadFileLibraryDAOException(MESSAGE_CANT_WRITE, e);
+            throw new BadFileLibraryDAOException("can't write file", e);
         }
     }
 
