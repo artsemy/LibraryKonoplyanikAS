@@ -14,6 +14,8 @@ import java.util.TreeSet;
 import static by.training.epam.data.Constant.*;
 
 public class GroupDAOImpl implements GroupDAO {
+    // мы на занятии обсуждали, почему в этой реализации нужно уходить от синглтона и от экземпляров полей классов
+    // и что я вижу проверяя?
 
     private static GroupDAOImpl singleton;
     private static ClientSource source;

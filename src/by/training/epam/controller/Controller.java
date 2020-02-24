@@ -18,7 +18,7 @@ public class Controller {
             Command command = provider.getCommand(requestSplit.commandName);
             response = command.execute(requestSplit.actualRequest);
         } catch (ServiceException e) {
-            throw new ControllerException(e.getMessage(), e);
+            throw new ControllerException(e.getMessage(), e);// ну и куда ты из контроллера выбрасываешь исключение? да еще с второй раз продублированным сообдением
         }
         return response;
     }

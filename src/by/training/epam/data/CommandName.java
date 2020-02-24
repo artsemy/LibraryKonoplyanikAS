@@ -12,15 +12,16 @@ public enum CommandName {
 
     public static CommandName parse(String command) {
         if (command == null) {
-            return null;
+            return null;// вы уже знаете основу работу с исключениями, зачем такой перефин ушами
         }
-        CommandName[] array = CommandName.values();
+        CommandName[] array = CommandName.values();// выучи методы java.lang.Enum, чтобы не изобретать велосипед
+        // valueof тебе бы помог
         for (CommandName name: array) {
             if (command.equalsIgnoreCase(name.name())) {
                 return name;
             }
         }
-        return null;
+        return null;// здесь лучше сделать страходку и null не возвращать, вернуть команду по умолчанию, или что-то в этом роде
     }
 
 }
