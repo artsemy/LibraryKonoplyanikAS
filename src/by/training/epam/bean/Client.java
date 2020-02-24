@@ -2,11 +2,18 @@ package by.training.epam.bean;
 
 import by.training.epam.data.ClientRole;
 
-public class Client implements Comparable{
+import java.io.Serializable;
+
+public class Client implements Comparable, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String login;
     private String password;
     private ClientRole clientRole;
+
+    public Client() {
+    }
 
     public Client(String login, String password, ClientRole role) {
         setLogin(login);

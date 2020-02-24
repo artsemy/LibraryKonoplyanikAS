@@ -1,10 +1,17 @@
 package by.training.epam.bean;
 
-public class Book implements Comparable{
+import java.io.Serializable;
+
+public class Book implements Comparable, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String title;
     private String author;
     private int id;
+
+    public Book() {
+    }
 
     public Book(String title, String author, int id) {
         setTitle(title);
