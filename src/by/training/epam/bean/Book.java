@@ -1,6 +1,7 @@
 package by.training.epam.bean;
 
-public class Book implements Comparable{
+public class Book implements Comparable{// для bean- класса не хватает некоторых пунктов Serializable, конструктор без параметров
+    // повтори еще раз эту тему
 
     private String title;
     private String author;

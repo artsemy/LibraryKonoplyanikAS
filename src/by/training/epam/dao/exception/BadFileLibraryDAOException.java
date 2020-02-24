@@ -1,6 +1,7 @@
 package by.training.epam.dao.exception;
 
 public class BadFileLibraryDAOException extends DAOException{
+    // куда пропал serialversionUID?
 
     public BadFileLibraryDAOException(String message) {
         super(message);

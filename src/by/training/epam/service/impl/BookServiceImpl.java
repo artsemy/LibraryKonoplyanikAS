@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
             libraryDAO = LibraryDAOImpl.getInstance();
             bookValidator = BookValidatorImpl.getInstance();
         } catch (BadFileLibraryDAOException e) {
-            throw new BadFileBookServiceException(e.getMessage(), e);
+            throw new BadFileBookServiceException(e.getMessage(), e);// обсуждали этот кейс, зачем дублируешь сообщения?
         }
     }
 
@@ -47,12 +47,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public String create(String sBook) throws ServiceException {
         boolean needUpdate = false;
-        if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {
+        if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {// плохочитаемо, не понятно, когда именно должен быть true
             Book book = bookValidator.validateCreate(sBook);
             try {
                 needUpdate = libraryDAO.create(book);
             } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);
+                throw new BadFileBookServiceException(MESSAGE_CANT_READ, e);// и здесь говорили, что тут как раз используется строчка в своем первозданном виде
+            
             }
         }
         return result(ADDED, needUpdate);
@@ -113,5 +114,9 @@ public class BookServiceImpl implements BookService {
         }
         return false;
     }
+    
+    // ты своим кодом пытаешься реализовать REST
+    // но REST уже сам контролее, поэтому и сервисы получаются кривыми
+    // зачем ты решил постоянно возвращать String?
 
 }
