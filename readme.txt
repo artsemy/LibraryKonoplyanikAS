@@ -8,3 +8,7 @@ find_book title -by author - finding book
 delete_book id - deleting book
 change_book title -by author -by id - changing book by id
 exit - exit
+
+admin can use all book commands
+user can use "add" "find"
+not authorized only "find"

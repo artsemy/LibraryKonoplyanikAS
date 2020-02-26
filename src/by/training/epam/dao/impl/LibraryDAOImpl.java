@@ -15,21 +15,13 @@ import static by.training.epam.data.Constant.*;
 
 public class LibraryDAOImpl implements LibraryDAO {
 
-    private static LibraryDAOImpl instance;
     private BookSource source;
     private static final Map<Integer, Book> booksCache = new TreeMap<>();
     private static final int MAX_ID = 100;
 
-    private LibraryDAOImpl() throws BadFileLibraryDAOException {
+    public LibraryDAOImpl() throws BadFileLibraryDAOException {
         source = BookSourceImpl.getInstance();
         download();
-    }
-
-    public static synchronized LibraryDAOImpl getInstance() throws BadFileLibraryDAOException {
-        if (instance == null) {
-            instance = new LibraryDAOImpl();
-        }
-        return instance;
     }
 
     @Override

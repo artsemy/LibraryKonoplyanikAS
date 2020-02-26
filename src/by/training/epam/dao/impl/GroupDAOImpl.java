@@ -12,23 +12,13 @@ import java.io.IOException;
 import java.util.TreeSet;
 
 public class GroupDAOImpl implements GroupDAO {
-    // мы на занятии обсуждали, почему в этой реализации нужно уходить от синглтона и от экземпляров полей классов
-    // и что я вижу проверяя?
 
-    private static GroupDAOImpl singleton;
     private static ClientSource source;
     private static final TreeSet<Client> clientsCache = new TreeSet<>();
 
-    private GroupDAOImpl() throws BadFileGroupDAOException {
+    public GroupDAOImpl() throws BadFileGroupDAOException {
         source = ClientSourceImpl.getInstance();
         download();
-    }
-
-    public static synchronized GroupDAOImpl getInstance() throws BadFileGroupDAOException {
-        if (singleton == null) {
-            singleton = new GroupDAOImpl();
-        }
-        return singleton;
     }
 
     @Override

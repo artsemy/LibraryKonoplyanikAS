@@ -1,12 +1,11 @@
 package by.training.epam.service.impl;
 
 import by.training.epam.bean.Book;
+import by.training.epam.dao.DAOFactory;
 import by.training.epam.dao.LibraryDAO;
-import by.training.epam.dao.exception.BadFileLibraryDAOException;
+import by.training.epam.dao.exception.DAOException;
 import by.training.epam.data.ClientRole;
 import by.training.epam.service.BookService;
-import by.training.epam.service.exception.BadFileBookServiceException;
-import by.training.epam.dao.impl.LibraryDAOImpl;
 import by.training.epam.service.exception.ServiceException;
 import by.training.epam.service.validator.BookValidator;
 import by.training.epam.service.validator.impl.BookValidatorImpl;
@@ -17,10 +16,6 @@ import static by.training.epam.data.Constant.*;
 
 public class BookServiceImpl implements BookService {
 
-    private static BookServiceImpl instance;
-    private LibraryDAO libraryDAO;
-    private BookValidator bookValidator;
-
     private final static String ADDED = "added";
     private final static String DELETED = "deleted";
     private final static String CHANGED = "changed";
@@ -28,33 +23,21 @@ public class BookServiceImpl implements BookService {
     private final static String SUCCESS = "book ";
     private final static String NOT_SUCCESS = "error, book not ";
 
-    private BookServiceImpl() throws BadFileBookServiceException {
-        try {
-            libraryDAO = LibraryDAOImpl.getInstance();
-            bookValidator = BookValidatorImpl.getInstance();
-        } catch (BadFileLibraryDAOException e) {
-            throw new BadFileBookServiceException(e);
-        }
-    }
-
-    public static synchronized BookServiceImpl getInstance() throws BadFileBookServiceException {
-        if (instance == null) {
-            instance = new BookServiceImpl();
-        }
-        return instance;
-    }
+    public BookServiceImpl() {}
 
     @Override
     public String create(String sBook) throws ServiceException {
         boolean needUpdate = false;
-        if (checkRole(ClientRole.USER, ClientRole.ADMIN)) {// плохочитаемо, не понятно, когда именно должен быть true
-            Book book = bookValidator.validateCreate(sBook);
-            try {
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+            BookValidator bookValidator = BookValidatorImpl.getInstance();
+            if (roleCanUseCommand(ClientRole.USER, ClientRole.ADMIN)) {
+                Book book = bookValidator.validateCreate(sBook);
                 needUpdate = libraryDAO.create(book);
-            } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(e);
-            
             }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
         return result(ADDED, needUpdate);
     }
@@ -62,13 +45,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public String delete(String sId) throws ServiceException {
         boolean needUpdate = false;
-        if (checkRole(ClientRole.ADMIN)) {
-            int id = bookValidator.validateDelete(sId);
-            try {
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+            BookValidator bookValidator = BookValidatorImpl.getInstance();
+            if (roleCanUseCommand(ClientRole.ADMIN)) {
+                int id = bookValidator.validateDelete(sId);
                 needUpdate = libraryDAO.delete(id);
-            } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(e);
             }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
         return result(DELETED, needUpdate);
     }
@@ -76,25 +62,37 @@ public class BookServiceImpl implements BookService {
     @Override
     public String update(String sBook) throws ServiceException {
         boolean needUpdate = false;
-        if (checkRole(ClientRole.ADMIN)) {
-            Book book = bookValidator.validateUpdate(sBook);
-            try {
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+            BookValidator bookValidator = BookValidatorImpl.getInstance();
+            if (roleCanUseCommand(ClientRole.ADMIN)) {
+                Book book = bookValidator.validateUpdate(sBook);
                 needUpdate = libraryDAO.update(book);
-            } catch (BadFileLibraryDAOException e) {
-                throw new BadFileBookServiceException(e);
             }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
+
         return result(CHANGED, needUpdate);
     }
 
     @Override
-    public String read(String sBook) {
-        Book book = bookValidator.validateRead(sBook);
-        Collection<Book> lib = libraryDAO.read(book);
-        StringBuilder res = new StringBuilder(FOUNDED + END_LINE);
-        for (Book b: lib) {
-            String line = String.join(DIVIDER_BOOK_LINE, b.getTitle(), b.getAuthor(), String.valueOf(b.getId()));
-            res.append(line).append(END_LINE);
+    public String read(String sBook) throws ServiceException {
+        StringBuilder res;
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+            BookValidator bookValidator = BookValidatorImpl.getInstance();
+            Book book = bookValidator.validateRead(sBook);
+            Collection<Book> lib = libraryDAO.read(book);
+            res = new StringBuilder(FOUNDED + END_LINE);
+            for (Book b: lib) {
+                String line = String.join(DIVIDER_BOOK_LINE, b.getTitle(), b.getAuthor(), String.valueOf(b.getId()));
+                res.append(line).append(END_LINE);
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
         return res.toString();
     }
@@ -105,18 +103,23 @@ public class BookServiceImpl implements BookService {
         return res;
     }
 
-    private boolean checkRole(ClientRole ... roles) {
-        ClientRole clientRole = libraryDAO.getRole();
-        for (ClientRole r: roles) {
-            if (clientRole.equals(r)) {
-                return true;
+    private boolean roleCanUseCommand(ClientRole ... roles) throws ServiceException {
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            LibraryDAO libraryDAO = daoFactory.getLibraryDAO();
+            ClientRole clientRole = libraryDAO.getRole();
+            for (ClientRole r: roles) {
+                if (clientRole.equals(r)) {
+                    return true;
+                }
             }
+        } catch (DAOException e) {
+            throw new ServiceException();
         }
         return false;
     }
-    
-    // ты своим кодом пытаешься реализовать REST
-    // но REST уже сам контролее, поэтому и сервисы получаются кривыми
+
     // зачем ты решил постоянно возвращать String?
+    // String удобнее всего возвращать
 
 }

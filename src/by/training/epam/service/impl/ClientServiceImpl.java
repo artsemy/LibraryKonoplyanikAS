@@ -1,8 +1,10 @@
 package by.training.epam.service.impl;
 
 import by.training.epam.bean.Client;
+import by.training.epam.dao.DAOFactory;
 import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
+import by.training.epam.dao.exception.DAOException;
 import by.training.epam.service.ClientService;
 import by.training.epam.service.exception.BadFileGroupServiceException;
 import by.training.epam.dao.impl.GroupDAOImpl;
@@ -12,47 +14,40 @@ import by.training.epam.service.validator.impl.ClientValidatorImpl;
 
 public class ClientServiceImpl implements ClientService {
 
-    private static ClientServiceImpl instance;
-    private GroupDAO groupDAO;
-    private ClientValidator clientValidator;
-
     private final static String REGISTRATION_OK = "Hello newbie";
     private final static String REGISTRATION_NOT_OK = "can't register, bad login";
     private final static String SIGN_IN_OK = "welcome back";
     private final static String SIGN_IN_NOT_OK = "bad login or password";
 
-    private ClientServiceImpl() throws BadFileGroupServiceException {
-        try {
-            groupDAO = GroupDAOImpl.getInstance();
-            clientValidator = ClientValidatorImpl.getInstance();
-        } catch (BadFileGroupDAOException e) {
-            throw new BadFileGroupServiceException(e);
-        }
-    }
-
-    public static synchronized ClientServiceImpl getInstance() throws BadFileGroupServiceException {
-        if (instance == null) {
-            instance = new ClientServiceImpl();
-        }
-        return instance;
-    }
+    public ClientServiceImpl() {}
 
     @Override
     public String register(String request) throws ServiceException {
-        Client client = clientValidator.validateClient(request);
         boolean success;
         try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            GroupDAO groupDAO = daoFactory.getGroupDAO();
+            ClientValidator clientValidator = ClientValidatorImpl.getInstance();
+            Client client = clientValidator.validateClient(request);
             success = groupDAO.register(client);
-        } catch (BadFileGroupDAOException e) {
-            throw new BadFileGroupServiceException(e);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
         return success ? REGISTRATION_OK : REGISTRATION_NOT_OK;
     }
 
     @Override
-    public String signIn(String request) {
-        Client client = clientValidator.validateClient(request);
-        boolean success = groupDAO.signIn(client);
+    public String signIn(String request) throws ServiceException {
+        boolean success;
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            GroupDAO groupDAO = daoFactory.getGroupDAO();
+            ClientValidator clientValidator = ClientValidatorImpl.getInstance();
+            Client client = clientValidator.validateClient(request);
+            success = groupDAO.signIn(client);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         return success ? SIGN_IN_OK : SIGN_IN_NOT_OK;
     }
 
