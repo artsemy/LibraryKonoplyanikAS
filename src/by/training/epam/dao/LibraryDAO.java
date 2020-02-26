@@ -2,7 +2,7 @@ package by.training.epam.dao;
 
 import by.training.epam.bean.Book;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
-import by.training.epam.data.ClientRole;
+import by.training.epam.service.ClientRole;
 
 import java.util.Collection;
 

@@ -1,7 +1,7 @@
 package by.training.epam.source.impl;
 
 import by.training.epam.bean.Client;
-import by.training.epam.data.ClientRole;
+import by.training.epam.service.ClientRole;
 import by.training.epam.source.ClientSource;
 
 import java.io.*;
@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class ClientSourceImpl implements ClientSource {
 

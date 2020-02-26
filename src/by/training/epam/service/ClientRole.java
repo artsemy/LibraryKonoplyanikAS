@@ -1,4 +1,4 @@
-package by.training.epam.data;
+package by.training.epam.service;
 
 public enum ClientRole {
     ADMIN,

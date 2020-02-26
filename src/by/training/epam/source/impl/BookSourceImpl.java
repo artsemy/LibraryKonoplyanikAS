@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class BookSourceImpl implements BookSource {
 

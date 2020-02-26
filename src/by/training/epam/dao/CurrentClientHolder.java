@@ -1,6 +1,7 @@
-package by.training.epam.data;
+package by.training.epam.dao;
 
 import by.training.epam.bean.Client;
+import by.training.epam.service.ClientRole;
 
 public class CurrentClientHolder {
 

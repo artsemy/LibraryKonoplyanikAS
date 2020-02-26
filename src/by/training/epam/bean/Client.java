@@ -1,6 +1,6 @@
 package by.training.epam.bean;
 
-import by.training.epam.data.ClientRole;
+import by.training.epam.service.ClientRole;
 
 import java.io.Serializable;
 

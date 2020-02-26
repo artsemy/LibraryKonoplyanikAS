@@ -5,8 +5,8 @@ import by.training.epam.controller.command.CommandProvider;
 import by.training.epam.controller.command.exception.ControllerException;
 import by.training.epam.service.exception.*;
 
-import static by.training.epam.data.Constant.DIVIDER_LINE;
-import static by.training.epam.data.Constant.EMPTY_STRING;
+import static by.training.epam.Constant.DIVIDER_LINE;
+import static by.training.epam.Constant.EMPTY_STRING;
 
 public class Controller {
 

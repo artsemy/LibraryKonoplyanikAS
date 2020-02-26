@@ -1,10 +1,10 @@
 package by.training.epam.service.validator.impl;
 
 import by.training.epam.bean.Client;
-import by.training.epam.data.ClientRole;
+import by.training.epam.service.ClientRole;
 import by.training.epam.service.validator.ClientValidator;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class ClientValidatorImpl implements ClientValidator {
 

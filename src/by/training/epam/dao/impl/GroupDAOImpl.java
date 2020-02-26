@@ -3,8 +3,8 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Client;
 import by.training.epam.dao.GroupDAO;
 import by.training.epam.dao.exception.BadFileGroupDAOException;
-import by.training.epam.data.ClientRole;
-import by.training.epam.data.CurrentClientHolder;
+import by.training.epam.service.ClientRole;
+import by.training.epam.dao.CurrentClientHolder;
 import by.training.epam.source.ClientSource;
 import by.training.epam.source.impl.ClientSourceImpl;
 

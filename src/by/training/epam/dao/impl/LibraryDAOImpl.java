@@ -3,15 +3,15 @@ package by.training.epam.dao.impl;
 import by.training.epam.bean.Book;
 import by.training.epam.dao.LibraryDAO;
 import by.training.epam.dao.exception.BadFileLibraryDAOException;
-import by.training.epam.data.ClientRole;
-import by.training.epam.data.CurrentClientHolder;
+import by.training.epam.service.ClientRole;
+import by.training.epam.dao.CurrentClientHolder;
 import by.training.epam.source.BookSource;
 import by.training.epam.source.impl.BookSourceImpl;
 
 import java.io.IOException;
 import java.util.*;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class LibraryDAOImpl implements LibraryDAO {
 

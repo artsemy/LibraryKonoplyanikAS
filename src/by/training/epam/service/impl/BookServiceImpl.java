@@ -4,7 +4,7 @@ import by.training.epam.bean.Book;
 import by.training.epam.dao.DAOFactory;
 import by.training.epam.dao.LibraryDAO;
 import by.training.epam.dao.exception.DAOException;
-import by.training.epam.data.ClientRole;
+import by.training.epam.service.ClientRole;
 import by.training.epam.service.BookService;
 import by.training.epam.service.exception.ServiceException;
 import by.training.epam.service.validator.BookValidator;
@@ -12,7 +12,7 @@ import by.training.epam.service.validator.impl.BookValidatorImpl;
 
 import java.util.Collection;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class BookServiceImpl implements BookService {
 

@@ -1,6 +1,6 @@
 package by.training.epam.controller.command;
 
-import by.training.epam.data.CommandName;
+import by.training.epam.controller.CommandName;
 import by.training.epam.controller.command.impl.*;
 import by.training.epam.service.exception.ServiceException;
 

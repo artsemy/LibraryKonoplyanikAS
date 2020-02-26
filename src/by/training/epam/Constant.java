@@ -1,4 +1,4 @@
-package by.training.epam.data;
+package by.training.epam;
 
 public class Constant {
 

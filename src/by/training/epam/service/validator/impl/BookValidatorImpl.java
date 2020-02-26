@@ -3,7 +3,7 @@ package by.training.epam.service.validator.impl;
 import by.training.epam.bean.Book;
 import by.training.epam.service.validator.BookValidator;
 
-import static by.training.epam.data.Constant.*;
+import static by.training.epam.Constant.*;
 
 public class BookValidatorImpl implements BookValidator {
 
